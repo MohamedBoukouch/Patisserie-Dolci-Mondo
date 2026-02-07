@@ -115,7 +115,7 @@ const Slider = () => {
       ))}
 
       {/* LEFT BUTTON */}
-      <button
+      {/* <button
         onClick={prevSlide}
         className="absolute left-3 top-1/2 -translate-y-1/2
                    bg-black/50 text-white w-10 h-10
@@ -123,10 +123,10 @@ const Slider = () => {
                    hover:bg-black/70 transition z-30"
       >
         ❮
-      </button>
+      </button> */}
 
       {/* RIGHT BUTTON */}
-      <button
+      {/* <button
         onClick={nextSlide}
         className="absolute right-3 top-1/2 -translate-y-1/2
                    bg-black/50 text-white w-10 h-10
@@ -134,7 +134,7 @@ const Slider = () => {
                    hover:bg-black/70 transition z-30"
       >
         ❯
-      </button>
+      </button> */}
     </div>
   );
 };
