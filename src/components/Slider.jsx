@@ -3,7 +3,11 @@ import { slides } from "../models/sliderData";
 
 const Slider = () => {
   const [current, setCurrent] = useState(0);
+  const [videoLoaded, setVideoLoaded] = useState({});
   const length = slides.length;
+
+  // Image de remplacement par défaut
+  const DEFAULT_FALLBACK_IMAGE = "../../public/images/shoop.webp";
 
   const nextSlide = () => {
     setCurrent((prev) => (prev === length - 1 ? 0 : prev + 1));
@@ -11,6 +15,11 @@ const Slider = () => {
 
   const prevSlide = () => {
     setCurrent((prev) => (prev === 0 ? length - 1 : prev - 1));
+  };
+
+  // Handle video loaded event
+  const handleVideoLoaded = (id) => {
+    setVideoLoaded(prev => ({ ...prev, [id]: true }));
   };
 
   // 🔁 Auto slide every 6 seconds
@@ -39,16 +48,37 @@ const Slider = () => {
             />
           )}
 
-          {/* VIDEO */}
+          {/* VIDEO - Avec image de remplacement */}
           {slide.type === "video" && (
-            <video
-              src={slide.src}
-              autoPlay
-              muted
-              loop
-              playsInline
-              className="w-full h-full object-cover"
-            />
+            <>
+              {/* Image de remplacement qui reste visible jusqu'à ce que la vidéo soit chargée */}
+              {(!videoLoaded[slide.id] || !slide.src) && (
+                <img
+                  src={slide.fallbackImage || DEFAULT_FALLBACK_IMAGE}
+                  alt={slide.text}
+                  className="w-full h-full object-cover"
+                />
+              )}
+              
+              {/* La vidéo avec poster si disponible */}
+              <video
+                src={slide.src}
+                poster={slide.fallbackImage || DEFAULT_FALLBACK_IMAGE} // Image de remplacement pendant le chargement
+                autoPlay
+                muted
+                loop
+                playsInline
+                className={`w-full h-full object-cover ${
+                  !videoLoaded[slide.id] ? 'opacity-0' : 'opacity-100 transition-opacity duration-500'
+                }`}
+                onLoadedData={() => handleVideoLoaded(slide.id)}
+                onCanPlay={() => handleVideoLoaded(slide.id)}
+                onError={(e) => {
+                  console.error("Erreur de chargement de la vidéo:", e);
+                  // Si la vidéo échoue, on s'assure que l'image de remplacement reste visible
+                }}
+              />
+            </>
           )}
 
           {/* GIF */}
@@ -85,7 +115,7 @@ const Slider = () => {
       ))}
 
       {/* LEFT BUTTON */}
-      {/* <button
+      <button
         onClick={prevSlide}
         className="absolute left-3 top-1/2 -translate-y-1/2
                    bg-black/50 text-white w-10 h-10
@@ -93,10 +123,10 @@ const Slider = () => {
                    hover:bg-black/70 transition z-30"
       >
         ❮
-      </button> */}
+      </button>
 
       {/* RIGHT BUTTON */}
-      {/* <button
+      <button
         onClick={nextSlide}
         className="absolute right-3 top-1/2 -translate-y-1/2
                    bg-black/50 text-white w-10 h-10
@@ -104,7 +134,7 @@ const Slider = () => {
                    hover:bg-black/70 transition z-30"
       >
         ❯
-      </button> */}
+      </button>
     </div>
   );
 };

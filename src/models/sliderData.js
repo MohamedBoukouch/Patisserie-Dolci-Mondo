@@ -2,20 +2,20 @@ export const slides = [
     {
       id: 1,
       type: "video",
-      src: "../../public/vids/vid1.mp4",
+      src: "utting-cream-on-top-of-cake-while-making-homemade_8018930_medium_plaa9b.mp4",
       text: " DOLCI MONDO مرحبا بكم في "
     },
     {
       id: 2,
       type: "video",
-      src: "../../public/vids/vid2.mp4",
+      src: "https://res.cloudinary.com/ds9v1rpfi/video/upload/v1770476548/vecteezy_croissant-wrapped-hotdog-pastries-in-display-case_13286100_daoivh.mp4",
       text: "شاهد حلوياتنا تتحضر"
     },
     {
       id: 3,
       type: "video",
-      src: "../../public/vids/vid3.mp4",
+      src: "https://res.cloudinary.com/ds9v1rpfi/video/upload/v1770476927/x-large-vecteezy_slice-of-strawberry-chocolate-cake-on-a-plate_47364355_x-large_dn8mkm.mp4",
       text: "حلويات تقليدية وعصرية"
-    }
+    },
   ];
   
