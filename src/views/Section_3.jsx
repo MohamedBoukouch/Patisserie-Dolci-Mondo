@@ -1,9 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useTranslation } from "react-i18next";
 
 const Section_3 = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [contentVisible, setContentVisible] = useState(false);
   const sectionRef = useRef(null);
+  const { t, i18n } = useTranslation();
+
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -53,7 +56,7 @@ const Section_3 = () => {
       }`}>
         {/* العنوان */}
         <h2 className="text-2xl md:text-4xl font-light text-gray-800 mb-6 md:mb-8 text-center font-cairo leading-relaxed">
-          مجموعة المشروبات الساخنة
+          {t("section3.alt")}
         </h2>
 
         {/* النقاط الزخرفية */}
@@ -65,7 +68,7 @@ const Section_3 = () => {
 
         {/* الوصف */}
         <p className="text-center text-gray-600 font-light leading-relaxed mb-8 md:mb-10 font-cairo text-sm md:text-base">
-          ماكارون وأوجيني: اكتشف عطورنا الجديدة والحصرية، المستوحاة من روح مشروباتنا الساخنة المميزة.
+        {t("section3.description")}
         </p>
 
         {/* زر الاكتشاف */}
@@ -74,7 +77,7 @@ const Section_3 = () => {
             onClick={() => window.location.href = '/allproducts'}
             className="px-6 md:px-10 py-2 md:py-3 border border-gray-800 text-gray-800 hover:bg-gray-800 hover:text-white transition-all duration-300 font-light text-xs md:text-sm font-cairo"
           >
-            اكتشف المزيد
+            {t("section3.button")} 
           </button>
         </div>
       </div>

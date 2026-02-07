@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useTranslation } from "react-i18next";
 
 const Section_6 = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -7,6 +8,8 @@ const Section_6 = () => {
   const [statsVisible, setStatsVisible] = useState([false, false, false]);
   const [separatorVisible, setSeparatorVisible] = useState(false);
   const sectionRef = useRef(null);
+  const { t, i18n } = useTranslation();
+
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -72,21 +75,31 @@ const Section_6 = () => {
         {/* Contenu principal */}
         <div className="max-w-3xl lg:max-w-4xl mx-auto">
           {/* Paragraphe principal avec animation */}
-          <p className={`text-base md:text-lg lg:text-xl text-gray-700 leading-relaxed text-center mb-8 md:mb-10 lg:mb-12 transition-all duration-700 delay-200 ${
+          {/* <p className={`text-base md:text-lg lg:text-xl text-gray-700 leading-relaxed text-center mb-8 md:mb-10 lg:mb-12 transition-all duration-700 delay-200 ${
             textVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
           }`}>
             منذ عام 2010، يُمثل بيت دولسيموندو التميز في الحلويات الشرقية 
             مع لمسة عصرية. نحن مؤسسة رائدة، نتحدى كل يوم 
             لنوفق بين التقاليد والابتكار بإبداع من خلال مأكولاتنا الشهية.
+          </p> */}
+          <p className={`text-base md:text-lg lg:text-xl text-gray-700 leading-relaxed text-center mb-8 md:mb-10 lg:mb-12 transition-all duration-700 delay-200 ${
+            textVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+            }`}>
+              {t('section6.description').split('\n').map((line, index) => (
+              <React.Fragment key={index}>
+                {line}
+                <br />
+              </React.Fragment>
+            ))}
           </p>
 
           {/* Statistiques avec animations individuelles */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 lg:gap-12 mb-8 md:mb-10 lg:mb-12">
             {statsVisible.map((isStatVisible, index) => {
               const stats = [
-                { number: "+14", label: "سنوات من التميز" },
-                { number: "+50", label: "إبداعات فريدة" },
-                { number: "3", label: "دول نتواجد بها" }
+                { number: "+14", label: "section6.stats1" },
+                { number: "+50", label: "section6.stats2" },
+                { number: "3", label: "section6.stats3" }
               ];
               
               return (
@@ -103,7 +116,7 @@ const Section_6 = () => {
                     {stats[index].number}
                   </div>
                   <div className="text-sm md:text-base text-gray-600 font-medium">
-                    {stats[index].label}
+                    {t(stats[index].label)}
                   </div>
                 </div>
               );

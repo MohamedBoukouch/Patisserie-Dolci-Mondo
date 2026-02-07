@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'; 
 import { products } from '../models/products';
+import { useTranslation } from "react-i18next";
 
 const categories = ['الكل', 'ماكارون', 'شوكولاتة', 'هدايا', 'جديد', 'الأكثر مبيعاً', 'الأعلى تقييماً'];
 
@@ -8,6 +9,8 @@ const AllProducts = () => {
   const [itemsVisible, setItemsVisible] = useState(products.map(() => false));
   const [activeCategory, setActiveCategory] = useState('الكل');
   const [filteredProducts, setFilteredProducts] = useState(products);
+  const { t, i18n } = useTranslation();
+
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -123,9 +126,9 @@ const AllProducts = () => {
             {/* تفاصيل المنتج */}
             <div className="p-3 md:p-4 text-center">
               <h3 className="text-sm md:text-base font-light text-gray-700 mb-1 line-clamp-1">
-                {prod.name}
+                {t(prod.nameKey)}
               </h3>
-              <p className="text-xs md:text-sm text-amber-600 font-medium">{prod.price}</p>
+              <p className="text-xs md:text-sm text-amber-600 font-medium">{prod.price} KSA</p>
             </div>
           </div>
         ))}

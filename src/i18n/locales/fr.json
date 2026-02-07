@@ -1,0 +1,60 @@
+{
+    "welcome": "Bienvenue chez Dolci Mondo",
+    "discover": "Découvrir",
+    "contact": "Contact",
+    "language": "Langue",
+    "seemore": "Voir Plus",
+  
+    "slider": {
+      "slide1": "Bienvenue chez DOLCI MONDO",
+      "slide2": "Découvrez la préparation de nos pâtisseries",
+      "slide3": "Pâtisseries traditionnelles et modernes"
+    },
+  
+    "products": {
+      "macaron_laduree": "Macaron Ladurée",
+      "tote_bag": "Mini sac tote Ladurée",
+      "heart_box": "Boîte cœur Ladurée",
+      "mug_rose": "Mug rose Ladurée"
+    },
+  
+    "categories": {
+        "wedding": "Mariage",
+        "newBaby": "Nouveau-né",
+        "birthday": "Anniversaire",
+        "engagement": "Fiançailles",
+        "anniversary": "Anniversaire",
+        "all": "Tous"
+    },
+
+    "section3": {
+        "alt": "Collection de boissons chaudes",
+        "title": "Collection de boissons chaudes",
+        "description": "Macarons & Eugénie : Découvrez nos nouvelles senteurs exclusives, inspirées par l'esprit de nos boissons chaudes emblématiques.",
+        "button": "Découvrir"
+    },
+
+    "section4": {
+        "subtitle": "Découvrez notre collection",
+        "titleLine1": "Découvrez tous",
+        "titleLine2": "nos produits",
+        "button": "Découvrir maintenant"
+    },
+      
+    "section6": {
+        "title": "DOLCI MONDO",
+        "description": "Depuis 2010, Dolci Mondo représente l'excellence des pâtisseries orientales\navec une touche moderne. Nous sommes une entreprise leader, nous défions chaque jour\npour combiner tradition et innovation à travers nos délicieuses créations.",
+        "stats1": "Années d'excellence",
+        "stats2": "Créations uniques",
+        "stats3": "Pays où nous sommes présents"
+    },
+
+    "section7": {
+        "alt": "Image de Dolcimondo",
+        "title_ar": "Qu'est-ce que Dolcimondo ?",
+        "title_en": "What's Dolcimondo?",
+        "description": "Dolcimondo est un univers de pâtisseries orientales raffinées, alliant les traditions arabes\naux techniques modernes de la pâtisserie française. Chaque pièce raconte une histoire de créativité et de qualité,\nréalisée par des mains expertes et des cœurs aimant créer le bonheur.",
+        "button": "Découvrez DOLCI MONDO"
+    }      
+  }
+  

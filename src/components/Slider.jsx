@@ -1,10 +1,13 @@
 import { useEffect, useState } from "react";
 import { slides } from "../models/sliderData";
+import { useTranslation } from "react-i18next";
+
 
 const Slider = () => {
   const [current, setCurrent] = useState(0);
   const [videoLoaded, setVideoLoaded] = useState({});
   const length = slides.length;
+  const { t } = useTranslation();
 
   // Image de remplacement par défaut
   const DEFAULT_FALLBACK_IMAGE = "/images/shoop.webp";
@@ -98,7 +101,8 @@ const Slider = () => {
             <div className="text-center max-w-2xl">
               <h2 className="text-white font-cairo font-bold 
                              text-2xl sm:text-3xl md:text-5xl mb-4">
-                {slide.text}
+                {/* {slide.text} */}
+                {t(slide.textKey)}
               </h2>
             </div>
           </div>

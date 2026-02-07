@@ -1,0 +1,60 @@
+{
+    "welcome": "Welcome to Dolci Mondo",
+    "discover": "Discover",
+    "contact": "Contact",
+    "language": "Language",
+    "seemore": "See More",
+  
+    "slider": {
+      "slide1": "Welcome to DOLCI MONDO",
+      "slide2": "Watch our pastries being prepared",
+      "slide3": "Traditional and modern pastries"
+    },
+  
+    "products": {
+      "macaron_laduree": "Ladurée Macaron",
+      "tote_bag": "Mini Ladurée Tote Bag",
+      "heart_box": "Ladurée Heart Box",
+      "mug_rose": "Pink Ladurée Mug"
+    },
+    "categories": {
+        "wedding": "Wedding",
+        "newBaby": "New Baby",
+        "birthday": "Birthday",
+        "engagement": "Engagement",
+        "anniversary": "Anniversary",
+        "all": "All"
+    },
+
+    "section3": {
+        "alt": "Hot Drinks Collection",
+        "title": "Hot Drinks Collection",
+        "description": "Macarons & Eugénie: Discover our new exclusive aromas inspired by the spirit of our signature hot drinks.",
+        "button": "Discover More"
+    },
+
+    "section4": {
+        "subtitle": "Discover our collection",
+        "titleLine1": "Discover all",
+        "titleLine2": "our products",
+        "button": "Discover Now"
+      },
+
+    "section6": {
+        "title": "DOLCI MONDO",
+        "description": "Since 2010, Dolci Mondo represents excellence in oriental pastries\nwith a modern touch. We are a leading company, challenging every day\nto combine tradition and innovation through our delicious creations.",
+        "stats1": "Years of excellence",
+        "stats2": "Unique creations",
+        "stats3": "Countries we are in"
+    },
+
+    "section7": {
+        "alt": "Dolcimondo Pâtisserie Image",
+        "title_ar": "What's Dolcimondo?",
+        "title_en": "What's Dolcimondo?",
+        "description": "Dolcimondo is a world of fine oriental pastries, combining traditional Arabic sweets\nwith modern French patisserie techniques. Each piece tells a story of creativity and quality,\nmade by skilled hands and hearts that love to create happiness.",
+        "button": "Discover DOLCI MONDO"
+    }
+      
+  }
+  

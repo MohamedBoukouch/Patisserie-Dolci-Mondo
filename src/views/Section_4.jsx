@@ -1,10 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useTranslation } from "react-i18next";
 
 const Section_4 = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [titleVisible, setTitleVisible] = useState(false);
   const [buttonVisible, setButtonVisible] = useState(false);
   const sectionRef = useRef(null);
+  const { t, i18n } = useTranslation();
+
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -41,7 +44,7 @@ const Section_4 = () => {
       }`}>
         {/* العنوان الصغير */}
         <p className="text-xs tracking-widest text-gray-500 uppercase mb-6 md:mb-8 font-light">
-          اكتشف مجموعتنا
+        {t("section4.subtitle")}
         </p>
 
         {/* العنوان الرئيسي avec animation séparée pour chaque ligne */}
@@ -49,9 +52,9 @@ const Section_4 = () => {
           <h2 className={`text-4xl md:text-6xl lg:text-7xl font-light text-gray-800 mb-8 md:mb-12 font-cairo italic leading-tight transition-all duration-700 delay-200 ${
             titleVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
           }`}>
-            اكتشف جميع
+            {t("section4.titleLine1")} 
             <br />
-            منتجاتنا
+            {t("section4.titleLine2")}
           </h2>
         </div>
 
@@ -63,7 +66,7 @@ const Section_4 = () => {
             onClick={() => window.location.href = '/allproducts'}
             className="px-8 md:px-12 py-3 border border-gray-800 text-gray-800 hover:bg-gray-800 hover:text-white transition-all duration-300 font-light text-sm font-cairo transform hover:scale-105"
           >
-            اكتشف الآن
+             {t("section4.button")}
           </button>
         </div>
       </div>

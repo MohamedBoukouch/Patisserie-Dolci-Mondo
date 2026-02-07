@@ -1,20 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import { products } from '../models/products';
 import { specialProducts } from '../models/specialProducts';
+import { useTranslation } from "react-i18next";
 
 const categories = [
-  'زفاف',
-  'مولود جديد',
-  'عيد الميلاد',
-  'خطوبة',
-  'ذكرى سنوية',
-  'عرض الكل'
+  'categories.wedding',
+  'categories.newBaby',
+  'categories.birthday',
+  'categories.engagement',
+  'categories.anniversary',
+  'categories.all'
 ];
 
 const Section_2 = () => {
   const [isVisible, setIsVisible] = useState(false);
   // 6 produits normaux + 1 produit spécial = 7 éléments
   const [itemsVisible, setItemsVisible] = useState(Array(7).fill(false));
+  const { t, i18n } = useTranslation();
+
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -57,10 +60,10 @@ const Section_2 = () => {
       <div className={`flex justify-center flex-wrap gap-2 md:gap-3 mb-8 md:mb-12 text-xs md:text-sm text-gray-500 font-cairo font-light transition-all duration-700 delay-250 ${
         isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
       }`}>
-        {categories.map((cat, index) => (
+        {categories.map((catKey, index) => (
           <React.Fragment key={index}>
             <span className="cursor-pointer hover:text-rose-400 transition-colors duration-200 px-1">
-              {cat}
+            {t(catKey)}
             </span>
             {index !== categories.length - 1 && (
               <span className="text-gray-300 hidden md:inline">·</span>
@@ -107,9 +110,9 @@ const Section_2 = () => {
             {/* تفاصيل المنتج */}
             <div className="p-3 md:p-4 text-center">
               <h3 className="text-xs md:text-sm font-light text-gray-700 font-cairo mb-1 line-clamp-1">
-                {prod.name}
+              {t(prod.nameKey)}
               </h3>
-              <p className="text-xs text-gray-400 font-light">{prod.price}</p>
+              <p className="text-xs text-gray-400 font-light">{t(prod.price)} KSA</p>
             </div>
           </div>
         ))}
@@ -150,7 +153,8 @@ const Section_2 = () => {
           onClick={() => window.location.href = '/allproducts'}
           className="px-8 md:px-12 py-3 border border-gray-800 text-gray-800 hover:bg-gray-800 hover:text-white transition-colors duration-300 font-light text-sm font-cairo"
         >
-          عرض المزيد
+          
+          {t('seemore')}
         </button>
       </div>
     </section>
