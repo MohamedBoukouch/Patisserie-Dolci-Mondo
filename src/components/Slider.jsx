@@ -60,8 +60,11 @@ const Slider = () => {
             />
           )}
 
+          {/* Overlay noir avec opacité */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent z-10"></div>
+
           {/* TEXT OVERLAY - Texte au centre */}
-          <div className="absolute inset-0 flex items-center justify-center px-4">
+          <div className="absolute inset-0 flex items-center justify-center px-4 z-20">
             <div className="text-center max-w-2xl">
               <h2 className="text-white font-cairo font-bold 
                              text-2xl sm:text-3xl md:text-5xl mb-4">
@@ -70,11 +73,11 @@ const Slider = () => {
             </div>
           </div>
 
-          {/* Bouton en bas */}
-          <div className="absolute bottom-10 left-0 right-0 flex justify-center px-4">
+          {/* Bouton en bas - Responsive pour mobile */}
+          <div className="absolute bottom-16 md:bottom-10 left-0 right-0 flex justify-center px-4 z-20">
             <button className="px-5 py-2 bg-white text-gray-800 
                                font-medium shadow-lg hover:bg-gray-100 transition
-                               transform hover:scale-105">
+                               transform hover:scale-105 text-sm md:text-base">
               اكتشف
             </button>
           </div>
@@ -87,7 +90,7 @@ const Slider = () => {
         className="absolute left-3 top-1/2 -translate-y-1/2
                    bg-black/50 text-white w-10 h-10
                    flex items-center justify-center
-                   hover:bg-black/70 transition z-20"
+                   hover:bg-black/70 transition z-30"
       >
         ❮
       </button> */}
@@ -98,7 +101,7 @@ const Slider = () => {
         className="absolute right-3 top-1/2 -translate-y-1/2
                    bg-black/50 text-white w-10 h-10
                    flex items-center justify-center
-                   hover:bg-black/70 transition z-20"
+                   hover:bg-black/70 transition z-30"
       >
         ❯
       </button> */}
