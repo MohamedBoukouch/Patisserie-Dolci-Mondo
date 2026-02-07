@@ -7,7 +7,7 @@ const Slider = () => {
   const length = slides.length;
 
   // Image de remplacement par défaut
-  const DEFAULT_FALLBACK_IMAGE = "/images/section_3.webp";
+  const DEFAULT_FALLBACK_IMAGE = "/images/shoop.webp";
 
   const nextSlide = () => {
     setCurrent((prev) => (prev === length - 1 ? 0 : prev + 1));

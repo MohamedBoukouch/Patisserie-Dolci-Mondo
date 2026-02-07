@@ -63,7 +63,7 @@ const Section_7 = () => {
         }}
       >
         <img
-          src="/images/section_3.webp"
+          src="/images/shoop.webp"
           alt="Dolcimondo Pâtisserie"
           className="w-full h-full object-cover"
         />
