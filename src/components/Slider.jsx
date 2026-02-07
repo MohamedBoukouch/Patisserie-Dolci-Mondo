@@ -1,23 +1,36 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { slides } from "../models/sliderData";
 
 const Slider = () => {
   const [current, setCurrent] = useState(0);
   const length = slides.length;
 
-  const nextSlide = () => setCurrent(current === length - 1 ? 0 : current + 1);
-  const prevSlide = () => setCurrent(current === 0 ? length - 1 : current - 1);
+  const nextSlide = () => {
+    setCurrent((prev) => (prev === length - 1 ? 0 : prev + 1));
+  };
+
+  const prevSlide = () => {
+    setCurrent((prev) => (prev === 0 ? length - 1 : prev - 1));
+  };
+
+  // 🔁 Auto slide every 6 seconds
+  useEffect(() => {
+    const interval = setInterval(nextSlide, 6000);
+    return () => clearInterval(interval);
+  }, [current]);
+
+  if (!Array.isArray(slides) || slides.length === 0) return null;
 
   return (
     <div className="relative w-full h-screen overflow-hidden">
       {slides.map((slide, index) => (
         <div
           key={slide.id}
-          className={`${
-            index === current ? "block" : "hidden"
-          } w-full h-screen relative`}
+          className={`absolute inset-0 transition-opacity duration-700 ${
+            index === current ? "opacity-100 z-10" : "opacity-0 z-0"
+          }`}
         >
-          {/* Slide Content */}
+          {/* IMAGE */}
           {slide.type === "image" && (
             <img
               src={slide.src}
@@ -25,15 +38,20 @@ const Slider = () => {
               className="w-full h-full object-cover"
             />
           )}
+
+          {/* VIDEO */}
           {slide.type === "video" && (
             <video
               src={slide.src}
               autoPlay
               muted
               loop
+              playsInline
               className="w-full h-full object-cover"
             />
           )}
+
+          {/* GIF */}
           {slide.type === "gif" && (
             <img
               src={slide.src}
@@ -42,31 +60,48 @@ const Slider = () => {
             />
           )}
 
-          {/* Overlay for text */}
-          <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/30">
-            <div className=" p-8  text-center max-w-xl">
-              <h2 className="text-3xl md:text-5xl font-bold mb-4 text-white font-cairo">{slide.text}</h2>
-              <button className="font- mt-4 px-6 py-3 bg-amber-50 text-black font-semibold rounded-lg shadow-lg hover:bg-gray-300 transition">
-                اكتشف
-              </button>
+          {/* TEXT OVERLAY - Texte au centre */}
+          <div className="absolute inset-0 flex items-center justify-center px-4">
+            <div className="text-center max-w-2xl">
+              <h2 className="text-white font-cairo font-bold 
+                             text-2xl sm:text-3xl md:text-5xl mb-4">
+                {slide.text}
+              </h2>
             </div>
+          </div>
+
+          {/* Bouton en bas */}
+          <div className="absolute bottom-10 left-0 right-0 flex justify-center px-4">
+            <button className="px-5 py-2 bg-white text-gray-800 
+                               font-medium shadow-lg hover:bg-gray-100 transition
+                               transform hover:scale-105">
+              اكتشف
+            </button>
           </div>
         </div>
       ))}
 
-      {/* Navigation Buttons */}
-      <button
+      {/* LEFT BUTTON */}
+      {/* <button
         onClick={prevSlide}
-        className="absolute top-1/2 left-4 transform -translate-y-1/2 bg-black/50 text-white px-4 py-2 rounded-full shadow-lg hover:bg-black/70 transition"
+        className="absolute left-3 top-1/2 -translate-y-1/2
+                   bg-black/50 text-white w-10 h-10
+                   flex items-center justify-center
+                   hover:bg-black/70 transition z-20"
       >
-        &#10094;
-      </button>
-      <button
+        ❮
+      </button> */}
+
+      {/* RIGHT BUTTON */}
+      {/* <button
         onClick={nextSlide}
-        className="absolute top-1/2 right-4 transform -translate-y-1/2 bg-black/50 text-white px-4 py-2 rounded-full shadow-lg hover:bg-black/70 transition"
+        className="absolute right-3 top-1/2 -translate-y-1/2
+                   bg-black/50 text-white w-10 h-10
+                   flex items-center justify-center
+                   hover:bg-black/70 transition z-20"
       >
-        &#10095;
-      </button>
+        ❯
+      </button> */}
     </div>
   );
 };

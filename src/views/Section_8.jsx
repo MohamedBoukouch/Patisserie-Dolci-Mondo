@@ -103,7 +103,7 @@ const Section_8 = () => {
           </h2>
           <div className="w-20 md:w-24 h-1 bg-gradient-to-r from-amber-400 to-pink-400 mx-auto"></div>
           <p className="text-gray-600 text-sm md:text-base mt-4 max-w-2xl mx-auto">
-            نضمن لكم تجربة تسوق مريحة وآمنة مع دولسيموندو
+            نضمن لكم تجربة تسوق مريحة وآمنة مع DOLCI MONDO
           </p>
         </div>
 

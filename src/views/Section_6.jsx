@@ -51,7 +51,7 @@ const Section_6 = () => {
   return (
     <div 
       ref={sectionRef}
-      className={`w-full py-12 md:py-16 lg:py-24 bg-gradient-to-b from-amber-50 to-white transition-all duration-1000 ${
+      className={`w-full py-12 md:py-16 lg:py-24  bg-white transition-all duration-1000 ${
         isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
       }`}
       dir="rtl"
@@ -62,7 +62,7 @@ const Section_6 = () => {
           titleVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
         }`}>
           <h2 className="text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-serif text-gray-800 mb-3 md:mb-4">
-            منذ 2010، بيت دولسيموندو
+           DOLCI MONDO
           </h2>
           <div className={`w-20 md:w-24 h-1 bg-gradient-to-l from-amber-400 to-pink-400 mx-auto transition-all duration-1000 delay-300 ${
             titleVisible ? 'scale-x-100 opacity-100' : 'scale-x-0 opacity-0'

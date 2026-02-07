@@ -113,7 +113,7 @@ const Section_7 = () => {
             className="group relative px-8 md:px-12 py-3 md:py-4 bg-gradient-to-r from-amber-500 to-amber-600 text-white font-semibold font-cairo rounded-full hover:from-amber-600 hover:to-amber-700 transition-all duration-300 shadow-xl hover:shadow-2xl transform hover:scale-105 overflow-hidden"
           >
             <span className="relative z-10 text-sm md:text-base lg:text-lg">
-              أكتشف الدولسيموندو
+               DOLCI MONDO أكتشف 
             </span>
             <div className="absolute inset-0 bg-gradient-to-r from-amber-600 to-amber-700 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
             
@@ -129,23 +129,10 @@ const Section_7 = () => {
           </button>
         </div>
 
-        {/* Indicateur de défilement */}
-        <div className={`absolute bottom-8 left-1/2 transform -translate-x-1/2 flex flex-col items-center transition-opacity duration-1000 delay-900 ${
-          isVisible ? 'opacity-100' : 'opacity-0'
-        }`}>
-          <span className="text-white/70 text-xs font-light mb-2 font-cairo">
-            مرر للأسفل
-          </span>
-          <div className="w-6 h-10 border-2 border-white/50 rounded-full flex justify-center">
-            <div 
-              className="w-1 h-3 bg-white rounded-full mt-2 animate-bounce"
-              style={{ animationDuration: '2s' }}
-            ></div>
-          </div>
-        </div>
+        
 
         {/* Barre de progression du défilement */}
-        <div className="fixed right-4 top-1/2 transform -translate-y-1/2 hidden lg:block">
+        {/* <div className="fixed right-4 top-1/2 transform -translate-y-1/2 hidden lg:block">
           <div className="flex flex-col items-center">
             <div className="h-40 w-1 bg-gray-800/30 rounded-full overflow-hidden">
               <div 
@@ -157,7 +144,7 @@ const Section_7 = () => {
               {Math.round(scrollProgress * 100)}%
             </span>
           </div>
-        </div>
+        </div> */}
       </div>
 
       {/* Animation CSS pour le bouton */}

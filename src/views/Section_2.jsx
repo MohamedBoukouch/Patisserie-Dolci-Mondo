@@ -80,11 +80,11 @@ const Section_2 = () => {
             style={{ transitionDelay: `${index * 80}ms` }}
           >
             {/* صورة المنتج */}
-            <div className="relative bg-gradient-to-br from-rose-50 to-pink-50/50 p-4 md:p-6">
+            <div className="relative w-full overflow-hidden bg-white">
               <img
                 src={prod.img}
                 alt={prod.name}
-                className="w-full h-auto object-contain group-hover:scale-105 md:group-hover:scale-110 transition-transform duration-500"
+                className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
               />
               
               {/* WhatsApp Contact Container - hidden on mobile */}
@@ -117,7 +117,7 @@ const Section_2 = () => {
         isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
       }`}>
         <button
-          onClick={() => window.location.href = '/products'}
+          onClick={() => window.location.href = '/allproducts'}
           className="px-8 md:px-12 py-3 border border-gray-800 text-gray-800 hover:bg-gray-800 hover:text-white transition-colors duration-300 font-light text-sm font-cairo"
         >
           عرض المزيد

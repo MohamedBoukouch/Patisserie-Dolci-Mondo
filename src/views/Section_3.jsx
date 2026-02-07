@@ -71,7 +71,7 @@ const Section_3 = () => {
         {/* زر الاكتشاف */}
         <div className="flex justify-center">
           <button
-            onClick={() => window.location.href = '/collection'}
+            onClick={() => window.location.href = '/allproducts'}
             className="px-6 md:px-10 py-2 md:py-3 border border-gray-800 text-gray-800 hover:bg-gray-800 hover:text-white transition-all duration-300 font-light text-xs md:text-sm font-cairo"
           >
             اكتشف المزيد

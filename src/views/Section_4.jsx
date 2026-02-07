@@ -45,7 +45,7 @@ const Section_4 = () => {
         </p>
 
         {/* العنوان الرئيسي avec animation séparée pour chaque ligne */}
-        <div className="overflow-hidden">
+        <div className="">
           <h2 className={`text-4xl md:text-6xl lg:text-7xl font-light text-gray-800 mb-8 md:mb-12 font-cairo italic leading-tight transition-all duration-700 delay-200 ${
             titleVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
           }`}>
@@ -60,7 +60,7 @@ const Section_4 = () => {
           buttonVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
         }`}>
           <button
-            onClick={() => window.location.href = '/products'}
+            onClick={() => window.location.href = '/allproducts'}
             className="px-8 md:px-12 py-3 border border-gray-800 text-gray-800 hover:bg-gray-800 hover:text-white transition-all duration-300 font-light text-sm font-cairo transform hover:scale-105"
           >
             اكتشف الآن
