@@ -2,11 +2,12 @@
     "welcome": "Welcome to Dolci Mondo",
     "discover": "Discover",
     
-    "language": "Language",
+    
     "seemore": "See More",
 
     "header":{
-      "contact": "Contact"
+      "contact": "Contact",
+      "language": "Language"
     },
 
     "footer": {

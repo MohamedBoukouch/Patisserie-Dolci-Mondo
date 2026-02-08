@@ -2,11 +2,11 @@
     "welcome": "مرحبا بكم في دولشي موندو",
     "discover": "اكتشف",
     
-    "language": "اللغة",
     "seemore": "عرض المزيد",
 
     "header":{
-        "contact": "اتصل بنا"
+        "contact": "اتصل بنا",
+        "language": "اللغة"
     },
 
     "footer": {
