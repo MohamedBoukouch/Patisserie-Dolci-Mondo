@@ -3,8 +3,11 @@ import { FaFacebookF, FaInstagram, FaTiktok, FaWhatsapp } from 'react-icons/fa';
 import { MdLocationOn, MdPhone, MdEmail, MdAccessTime, MdCake } from 'react-icons/md';
 import { HiOutlineMail } from 'react-icons/hi';
 import { BsShieldCheck } from 'react-icons/bs';
+import { useTranslation } from "react-i18next";
 
 const Footer = () => {
+  const { t, i18n } = useTranslation();
+
   return (
     <footer className="w-full bg-gray-900 text-white pt-16 pb-10" dir="rtl">
       <div className="container mx-auto px-4 md:px-8">
@@ -20,13 +23,13 @@ const Footer = () => {
             </div>
 
             <p className="text-gray-400 text-sm leading-relaxed font-light mx-auto md:mx-0 max-w-xs">
-              منذ عام 2010، نقدم لكم أرقى الحلويات الشرقية مع لمسة عصرية. نحن ملتزمون بالجودة والتميز في كل تفصيل.
+              {t("footer.brand.description")}
             </p>
 
             <div className="flex items-center justify-center md:justify-start space-x-3 space-x-reverse pt-4">
               <BsShieldCheck className="text-xl text-amber-400" />
               <span className="text-xs text-gray-400 font-light">
-                جودة معتمدة منذ 2010
+              {t("footer.brand.quality")}
               </span>
             </div>
           </div>
@@ -34,15 +37,15 @@ const Footer = () => {
           {/* Quick Links */}
           <div className="text-center md:text-right">
             <h4 className="text-lg font-semibold font-cairo mb-8 pb-3 border-b border-gray-700">
-              روابط سريعة
+            {t("footer.quickLinks.title")}
             </h4>
             <ul className="space-y-4">
               {[
-                { text: 'الرئيسية', href: '/' },
-                { text: 'منتجاتنا', href: '/products' },
-                { text: 'المناسبات الخاصة', href: '/occasions' },
-                { text: 'عن دولسيموندو', href: '/about' },
-                { text: 'اتصل بنا', href: '/contact' },
+                { text: 'footer.quickLinks.links.home', href: '/' },
+                { text: 'footer.quickLinks.links.products', href: '/products' },
+                { text: 'footer.quickLinks.links.occasions', href: '/occasions' },
+                { text: 'footer.quickLinks.links.about', href: '/about' },
+                { text: 'footer.quickLinks.links.contact', href: '/contact' },
               ].map((link, index) => (
                 <li key={index}>
                   <a
@@ -50,7 +53,7 @@ const Footer = () => {
                     className="flex items-center justify-center md:justify-start text-gray-400 hover:text-amber-300 text-sm font-light transition-all duration-300 group"
                   >
                     <span className="ml-3 opacity-0 group-hover:opacity-100 transition-all">←</span>
-                    {link.text}
+                    {t(link.text)}
                   </a>
                 </li>
               ))}
@@ -60,31 +63,31 @@ const Footer = () => {
           {/* Contact */}
           <div className="text-center md:text-right">
             <h4 className="text-lg font-semibold font-cairo mb-8 pb-3 border-b border-gray-700">
-              معلومات الاتصال
+            {t("footer.contactInfo.title")}
             </h4>
             <ul className="space-y-6">
               <li className="flex items-center justify-center md:justify-start space-x-4 space-x-reverse">
                 <MdLocationOn className="text-xl text-amber-300" />
                 <span className="text-gray-400 text-sm font-light">
-                  الرياض، المملكة العربية السعودية
+                  {t("footer.contactInfo.location")}
                 </span>
               </li>
               <li className="flex items-center justify-center md:justify-start space-x-4 space-x-reverse">
                 <MdPhone className="text-xl text-amber-300" />
                 <span className="text-gray-400 text-sm font-light">
-                  +966 11 234 5678
+                {t("footer.contactInfo.phone")}
                 </span>
               </li>
               <li className="flex items-center justify-center md:justify-start space-x-4 space-x-reverse">
                 <MdEmail className="text-xl text-amber-300" />
                 <span className="text-gray-400 text-sm font-light">
-                  contact@dolci-mondo.com
+                {t("footer.contactInfo.email")}
                 </span>
               </li>
               <li className="flex items-center justify-center md:justify-start space-x-4 space-x-reverse">
                 <MdAccessTime className="text-xl text-amber-300" />
                 <span className="text-gray-400 text-sm font-light">
-                  يومياً: 8 صباحاً - 10 مساءً
+                {t("footer.contactInfo.hours")}
                 </span>
               </li>
             </ul>
@@ -93,11 +96,11 @@ const Footer = () => {
           {/* Newsletter & Social */}
           <div className="text-center md:text-right">
             <h4 className="text-lg font-semibold font-cairo mb-8 pb-3 border-b border-gray-700">
-              اشترك في النشرة البريدية
+            {t("footer.newsletter.title")}
             </h4>
 
             <p className="text-gray-400 text-sm mb-6 font-light">
-              اشترك للحصول على أحدث العروض والتحديثات.
+            {t("footer.newsletter.description")}
             </p>
 
             <form className="space-y-4">
@@ -105,7 +108,7 @@ const Footer = () => {
                 <HiOutlineMail className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 text-lg" />
                 <input
                   type="email"
-                  placeholder="بريدك الإلكتروني"
+                  placeholder={t("footer.newsletter.placeholder")}
                   className="w-full pl-12 pr-4 py-3 bg-gray-800 border border-gray-700 text-white text-sm rounded-lg focus:outline-none focus:border-amber-500"
                 />
               </div>
@@ -114,14 +117,14 @@ const Footer = () => {
                 type="submit"
                 className="w-full bg-amber-600 hover:bg-amber-700 py-3 rounded-lg text-sm font-medium transition"
               >
-                اشترك الآن
+                 {t("footer.newsletter.button")}
               </button>
             </form>
 
             {/* Social */}
             <div className="mt-10 pt-8 border-t border-gray-700">
               <p className="text-gray-400 text-sm mb-5 font-light">
-                تابعنا على:
+              {t("footer.social.followUs")}
               </p>
 
               <div className="flex gap-4 justify-center md:justify-start">
@@ -152,7 +155,7 @@ const Footer = () => {
             onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
             className="text-gray-400 hover:text-amber-300 text-sm font-light transition"
           >
-            العودة إلى الأعلى ↑
+             {t("footer.backToTop")}
           </button>
         </div>
       </div>

@@ -1,10 +1,49 @@
 {
     "welcome": "Bienvenue chez Dolci Mondo",
     "discover": "Découvrir",
-    "contact": "Contact",
     "language": "Langue",
     "seemore": "Voir Plus",
-  
+
+    "header":{
+        "contact": "Contact"
+    },
+
+    "footer": {
+        "brand": {
+            "title": "DOLCI MONDO",
+            "description": "Depuis 2010, nous vous proposons les meilleures pâtisseries orientales avec une touche moderne. Nous nous engageons à l'excellence et à la qualité dans chaque détail.",
+            "quality": "Qualité certifiée depuis 2010"
+        },
+        "quickLinks": {
+            "title": "Liens rapides",
+            "links": {
+                "home": "Accueil",
+                "products": "Nos produits",
+                "occasions": "Occasions spéciales",
+                "about": "À propos de Dolci Mondo",
+                "contact": "Contactez-nous"
+            }
+        },
+        "contactInfo": {
+            "title": "Informations de contact",
+            "location": "Riyad, Arabie Saoudite",
+            "phone": "+966 11 234 5678",
+            "email": "contact@dolci-mondo.com",
+            "hours": "Tous les jours : 8h - 22h"
+        },
+        "newsletter": {
+            "title": "Abonnez-vous à la newsletter",
+            "description": "Abonnez-vous pour recevoir les dernières offres et mises à jour.",
+            "placeholder": "Votre e-mail",
+            "button": "S'abonner maintenant"
+        },
+        "social": {
+            "followUs": "Suivez-nous sur :"
+        },
+        "backToTop": "Retour en haut ↑"
+    },
+    
+
     "slider": {
       "slide1": "Bienvenue chez DOLCI MONDO",
       "slide2": "Découvrez la préparation de nos pâtisseries",
@@ -26,6 +65,11 @@
         "anniversary": "Anniversaire",
         "all": "Tous"
     },
+
+    "section2": {
+        "subtitle": "Occasions spéciales",
+        "titel": "Collection des occasions spéciales"
+    },      
 
     "section3": {
         "alt": "Collection de boissons chaudes",
@@ -55,6 +99,49 @@
         "title_en": "What's Dolcimondo?",
         "description": "Dolcimondo est un univers de pâtisseries orientales raffinées, alliant les traditions arabes\naux techniques modernes de la pâtisserie française. Chaque pièce raconte une histoire de créativité et de qualité,\nréalisée par des mains expertes et des cœurs aimant créer le bonheur.",
         "button": "Découvrez DOLCI MONDO"
-    }      
+    },
+    
+    "section8": {
+        "title": "Nos services & garanties",
+        "subtitle": "Nous vous garantissons une expérience d’achat fluide et sécurisée avec DOLCI MONDO",
+        "services": [
+          {
+            "title": "Livraison à domicile",
+            "description": "Livraison en France et en Europe. Gratuite dès 75€ en France (voir conditions)."
+          },
+          {
+            "title": "Chaîne du froid",
+            "description": "Expédition des commandes sous température contrôlée la veille de la livraison."
+          },
+          {
+            "title": "Produits protégés",
+            "description": "Emballages conçus à partir de matériaux recyclables pour une protection optimale."
+          },
+          {
+            "title": "Service client",
+            "description": "Disponible du lundi au vendredi, de 9h à 17h, via le formulaire de contact du site."
+          }
+        ]
+    },
+
+    "contact": {
+        "title": "Contactez-nous",
+        "mainTitle": "Société des Ingrédients Veloutés",
+        "subtitle": "Pour les confiseries et chocolats – spécialisée dans les meilleurs ingrédients de qualité",
+        "phone": "Téléphone",
+        "email": "Email",
+        "hours": "Horaires d'ouverture",
+        "hours1": "Samedi - Mercredi : 7h00 - 19h00",
+        "hours2": "Jeudi - Vendredi : 8h00 - 18h00",
+        "address": "123 Rue des Boulangers, Ville des Pâtisseries, Arabie Saoudite 12345",
+        "socialMedia": "Réseaux sociaux",
+        "social": {
+          "whatsapp": { "name": "WhatsApp", "handle": "+966533622117" },
+          "instagram": { "name": "Instagram", "handle": "@dolcimondo" },
+          "tiktok": { "name": "TikTok", "handle": "@dolcimondo" },
+          "facebook": { "name": "Facebook", "handle": "Dolci Mondo" }
+        }
+    }
+      
   }
   

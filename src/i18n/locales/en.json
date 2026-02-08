@@ -1,10 +1,49 @@
 {
     "welcome": "Welcome to Dolci Mondo",
     "discover": "Discover",
-    "contact": "Contact",
+    
     "language": "Language",
     "seemore": "See More",
-  
+
+    "header":{
+      "contact": "Contact"
+    },
+
+    "footer": {
+      "brand": {
+          "title": "DOLCI MONDO",
+          "description": "Since 2010, we offer the finest oriental pastries with a modern touch. We are committed to quality and excellence in every detail.",
+          "quality": "Certified quality since 2010"
+      },
+      "quickLinks": {
+          "title": "Quick Links",
+          "links": {
+              "home": "Home",
+              "products": "Products",
+              "occasions": "Special Occasions",
+              "about": "About Dolci Mondo",
+              "contact": "Contact Us"
+          }
+      },
+      "contactInfo": {
+          "title": "Contact Information",
+          "location": "Riyadh, Saudi Arabia",
+          "phone": "+966 11 234 5678",
+          "email": "contact@dolci-mondo.com",
+          "hours": "Daily: 8 AM - 10 PM"
+      },
+      "newsletter": {
+          "title": "Subscribe to Newsletter",
+          "description": "Subscribe to get the latest offers and updates.",
+          "placeholder": "Your email",
+          "button": "Subscribe Now"
+      },
+      "social": {
+          "followUs": "Follow us on:"
+      },
+      "backToTop": "Back to top ↑"
+  },  
+
     "slider": {
       "slide1": "Welcome to DOLCI MONDO",
       "slide2": "Watch our pastries being prepared",
@@ -24,6 +63,11 @@
         "engagement": "Engagement",
         "anniversary": "Anniversary",
         "all": "All"
+    },
+
+    "section2": {
+      "subtitle": "Special Occasions",
+      "titel": "Special Occasions Collection"
     },
 
     "section3": {
@@ -54,7 +98,50 @@
         "title_en": "What's Dolcimondo?",
         "description": "Dolcimondo is a world of fine oriental pastries, combining traditional Arabic sweets\nwith modern French patisserie techniques. Each piece tells a story of creativity and quality,\nmade by skilled hands and hearts that love to create happiness.",
         "button": "Discover DOLCI MONDO"
+    },
+
+    "section8": {
+      "title": "Our Services & Guarantees",
+      "subtitle": "We ensure a smooth and secure shopping experience with DOLCI MONDO",
+      "services": [
+        {
+          "title": "Home Delivery",
+          "description": "Delivery across France and Europe. Free delivery from €75 in France (see conditions)."
+        },
+        {
+          "title": "Cold Chain",
+          "description": "Orders are shipped in temperature-controlled conditions the day before delivery."
+        },
+        {
+          "title": "Protected Products",
+          "description": "Packaging made from recyclable materials to ensure optimal product protection."
+        },
+        {
+          "title": "Customer Service",
+          "description": "Available Monday to Friday, from 9 a.m. to 5 p.m., via the contact form on our website."
+        }
+      ]
+    },
+
+    "contact": {
+      "title": "Contact Us",
+      "mainTitle": "Velvet Ingredients Company",
+      "subtitle": "For confectionery and chocolate – specializing in premium ingredients",
+      "phone": "Phone",
+      "email": "Email",
+      "hours": "Working Hours",
+      "hours1": "Saturday - Wednesday: 7:00 AM - 7:00 PM",
+      "hours2": "Thursday - Friday: 8:00 AM - 6:00 PM",
+      "address": "123 Baker Street, Sweet City, Saudi Arabia 12345",
+      "socialMedia": "Social Media",
+      "social": {
+        "whatsapp": { "name": "WhatsApp", "handle": "+966533622117" },
+        "instagram": { "name": "Instagram", "handle": "@dolcimondo" },
+        "tiktok": { "name": "TikTok", "handle": "@dolcimondo" },
+        "facebook": { "name": "Facebook", "handle": "Dolci Mondo" }
+      }
     }
+    
       
   }
   

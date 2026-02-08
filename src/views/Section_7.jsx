@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useTranslation } from "react-i18next";
 
 const Section_7 = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -7,6 +8,7 @@ const Section_7 = () => {
   const [buttonVisible, setButtonVisible] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
   const sectionRef = useRef(null);
+  const { t, i18n } = useTranslation();
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -84,8 +86,8 @@ const Section_7 = () => {
             : 'opacity-0 translate-y-10'
         }`}>
           <h1 className="text-3xl md:text-4xl lg:text-6xl xl:text-7xl font-bold font-cairo mb-4 md:mb-6 leading-tight">
-            <span className="block">ما هو دولسيموندو؟</span>
-            <span className="block text-amber-300 mt-2">What's Dolcimondo?</span>
+            {/* <span className="block">{t("section7.title_ar")}</span> */}
+            <span className="block text-amber-300 mt-2">{t("section7.title_ar")}</span>
           </h1>
         </div>
 
@@ -96,9 +98,7 @@ const Section_7 = () => {
             : 'opacity-0 translate-y-10'
         }`}>
           <p className="text-base md:text-lg lg:text-xl font-light font-cairo leading-relaxed backdrop-blur-sm bg-white/5 p-6 rounded-2xl">
-            دولسيموندو هو عالم من الحلويات الشرقية الراقية، حيث نجمع بين تقاليد الحلويات العربية الأصيلة 
-            وتقنيات الباتيسري الفرنسية الحديثة. كل قطعة تحمل قصة من الإبداع والجودة، 
-            مصنوعة بأيدٍ خبيرة وقلوبٍ تحب صناعة السعادة.
+          {t("section7.description")}
           </p>
         </div>
 
@@ -113,7 +113,7 @@ const Section_7 = () => {
             className="group relative px-8 md:px-12 py-3 md:py-4 bg-gradient-to-r from-amber-500 to-amber-600 text-white font-semibold font-cairo rounded-full hover:from-amber-600 hover:to-amber-700 transition-all duration-300 shadow-xl hover:shadow-2xl transform hover:scale-105 overflow-hidden"
           >
             <span className="relative z-10 text-sm md:text-base lg:text-lg">
-               DOLCI MONDO أكتشف 
+            {t("section7.button")} 
             </span>
             <div className="absolute inset-0 bg-gradient-to-r from-amber-600 to-amber-700 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
             

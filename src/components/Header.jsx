@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
+import { Link } from "react-router-dom";
 
 const Header = () => {
   const { t, i18n } = useTranslation();
@@ -57,13 +58,13 @@ const Header = () => {
 
             {/* Logo */}
             <div className="absolute left-1/2 -translate-x-1/2">
+            <Link to="/">
               <img
                 src="/images/logo.png"
                 alt="Logo"
-                className={`h-14 transition ${
-                  isScrolled ? "" : "brightness-0 invert"
-                }`}
+                className={`h-14 transition ${isScrolled ? "" : "brightness-0 invert"}`}
               />
+            </Link>
             </div>
 
             {/* Language - Desktop */}

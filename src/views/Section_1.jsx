@@ -49,10 +49,10 @@ const Section_2 = () => {
         isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
       }`}>
         <p className="text-xs tracking-widest text-gray-400 uppercase mb-1 md:mb-2 font-light">
-          المناسبات الخاصة
+        {t("section2.subtitel")} 
         </p>
         <h1 className="text-xl md:text-2xl lg:text-5xl font-light text-gray-800 font-cairo">
-          تشكيلة المناسبات الخاصة 
+        {t("section2.titel")}  
         </h1>
       </div>
 

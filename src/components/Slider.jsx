@@ -112,7 +112,7 @@ const Slider = () => {
             <button className="px-5 py-2 bg-white text-gray-800 
                                font-medium shadow-lg hover:bg-gray-100 transition
                                transform hover:scale-105 text-sm md:text-base">
-              اكتشف
+              {t("discover")}
             </button>
           </div>
         </div>
