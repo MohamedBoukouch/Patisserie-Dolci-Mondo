@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { slides } from "../models/sliderData";
+import { slides } from "../../models/sliderData";
 import { useTranslation } from "react-i18next";
 
 

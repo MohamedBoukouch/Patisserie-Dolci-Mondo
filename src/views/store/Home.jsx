@@ -1,4 +1,4 @@
-import Slider from "../../components/Slider";
+import Slider from "../../components/store/Slider";
 import Section_1 from "./sections/Section_1";
 import Section_2 from "./sections/Section_2";
 import Section_3 from "./sections/Section_3";
