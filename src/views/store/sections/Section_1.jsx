@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { products } from '../models/products';
+import { products } from '../../../models/products';
+import { specialProducts } from '../../../models/specialProducts';
 import { useTranslation } from "react-i18next";
 
 const categories = [
@@ -13,8 +14,10 @@ const categories = [
 
 const Section_2 = () => {
   const [isVisible, setIsVisible] = useState(false);
-  const [itemsVisible, setItemsVisible] = useState(Array(8).fill(false));
+  // 6 produits normaux + 1 produit spécial = 7 éléments
+  const [itemsVisible, setItemsVisible] = useState(Array(7).fill(false));
   const { t, i18n } = useTranslation();
+
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -49,7 +52,7 @@ const Section_2 = () => {
         {t("section2.subtitle")} 
         </p>
         <h1 className="text-xl md:text-2xl lg:text-5xl font-light text-gray-800 font-cairo">
-          {t("section2.titel")} 
+        {t("section2.titel")}  
         </h1>
       </div>
 
@@ -60,7 +63,7 @@ const Section_2 = () => {
         {categories.map((catKey, index) => (
           <React.Fragment key={index}>
             <span className="cursor-pointer hover:text-rose-400 transition-colors duration-200 px-1">
-              {t(catKey)}
+            {t(catKey)}
             </span>
             {index !== categories.length - 1 && (
               <span className="text-gray-300 hidden md:inline">·</span>
@@ -69,9 +72,10 @@ const Section_2 = () => {
         ))}
       </div>
 
-      {/* شبكة المنتجات - Mobile: 2 منتجات، Desktop: 4 منتجات */}
+      {/* شبكة المنتجات - 6 منتجات عادية + 1 منتج خاص */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-[10px]">
-        {products.slice(0, 8).map((prod, index) => (
+        {/* 6 منتجات عادية أولاً */}
+        {products.slice(0, 6).map((prod, index) => (
           <div
             key={prod.id}
             className={`bg-white overflow-hidden group relative transition-all duration-500 ${
@@ -108,10 +112,37 @@ const Section_2 = () => {
               <h3 className="text-xs md:text-sm font-light text-gray-700 font-cairo mb-1 line-clamp-1">
               {t(prod.nameKey)}
               </h3>
-              <p className="text-xs text-gray-400 font-light">{prod.price} KSA</p>
+              <p className="text-xs text-gray-400 font-light">{t(prod.price)} KSA</p>
             </div>
           </div>
         ))}
+
+        {/* المنتج الخاص يأخذ مكان منتجين (آخر عنصر في الصف) */}
+        <div 
+          className={`col-span-2 md:col-span-2 bg-white overflow-hidden group relative transition-all duration-500 ${
+            itemsVisible[6] 
+              ? 'opacity-100 scale-100 translate-y-0' 
+              : 'opacity-0 scale-95 translate-y-6'
+          }`}
+          style={{ transitionDelay: '480ms' }}
+        >
+          {/* صورة المنتج الخاص */}
+          <div className="relative w-full overflow-hidden bg-white">
+            <img
+              src={specialProducts[0]?.img}
+              alt={specialProducts[0]?.name}
+              className="w-full h-full object-cover"
+            />
+          </div>
+
+          {/* تفاصيل المنتج الخاص - prend toute la largeur de 2 produits */}
+          {/* <div className="p-3 md:p-4 text-center w-full col-span-2">
+            <h3 className="text-xs md:text-sm font-light text-gray-700 font-cairo mb-1 line-clamp-1">
+              {specialProducts[0]?.name}
+            </h3>
+            <p className="text-xs text-gray-400 font-light">{specialProducts[0]?.price}</p>
+          </div> */}
+        </div>
       </div>
 
       {/* زر عرض المزيد */}
@@ -122,6 +153,7 @@ const Section_2 = () => {
           onClick={() => window.location.href = '/allproducts'}
           className="px-8 md:px-12 py-3 border border-gray-800 text-gray-800 hover:bg-gray-800 hover:text-white transition-colors duration-300 font-light text-sm font-cairo"
         >
+          
           {t('seemore')}
         </button>
       </div>

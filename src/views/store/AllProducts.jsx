@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'; 
-import { products } from '../models/products';
+import { products } from '../../models/products';
 import { useTranslation } from "react-i18next";
 
 const categories = ['الكل', 'ماكارون', 'شوكولاتة', 'هدايا', 'جديد', 'الأكثر مبيعاً', 'الأعلى تقييماً'];

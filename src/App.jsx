@@ -4,9 +4,9 @@ import { Routes, Route } from "react-router-dom";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 
-import Home from "./views/Home";
-import Contact from "./views/Contact";
-import AllProducts from "./views/AllProducts";
+import Home from "./views/store/Home";
+import Contact from "./views/store/Contact";
+import AllProducts from "./views/store/AllProducts";
 
 import i18n from "i18next";
 
