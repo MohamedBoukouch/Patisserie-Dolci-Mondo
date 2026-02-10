@@ -14,6 +14,7 @@ import AdminHome from "./views/admin/Home";
 import Orders from "./views/admin/Orders";
 import AllProduct from "./views/admin/products/AllProducts";
 import AddProduct from "./views/admin/products/AddProduit";
+import Collections from "./views/admin/products/Collections";
 
 function App() {
   useEffect(() => {
@@ -39,7 +40,7 @@ function App() {
         <Route path="products">
           <Route index element={<AllProduct />} />
           <Route path="add" element={<AddProduct />} />
-          {/* <Route path="collections" element={<Collections />} /> */}
+          <Route path="collections" element={<Collections />} />
         </Route>
       </Route>
 

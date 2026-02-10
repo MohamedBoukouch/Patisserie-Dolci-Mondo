@@ -1,18 +1,32 @@
 import React, { useState } from 'react'
+import { 
+  Package, 
+  DollarSign, 
+  Image as ImageIcon, 
+  Tag, 
+  Box, 
+  BarChart3, 
+  Eye, 
+  Save,
+  Link as LinkIcon,
+  FileText,
+  Folder,
+  Settings
+} from 'lucide-react'
 
 const AddProduit = () => {
   const [formData, setFormData] = useState({
     name: '',
-    url: '',
-    sku: '',
-    barcode: '',
-    weight: '',
-    stock: '',
-    category: '',
+    description: '',
     price: '',
     comparePrice: '',
     costPrice: '',
-    image: null
+    sku: '',
+    barcode: '',
+    stock: '',
+    category: '',
+    tags: '',
+    images: []
   })
 
   const handleChange = (e) => {
@@ -20,158 +34,153 @@ const AddProduit = () => {
     setFormData(prev => ({ ...prev, [name]: value }))
   }
 
-  const handleImageUpload = (e) => {
-    const file = e.target.files[0]
-    if (file) {
-      setFormData(prev => ({ ...prev, image: file }))
-    }
-  }
-
   const handleSubmit = (e) => {
     e.preventDefault()
-    console.log('Form submitted:', formData)
-    // Ajoute ta logique de soumission ici
+    console.log('Product data:', formData)
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 p-4 md:p-8" dir="rtl">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 p-4 md:p-8" dir="rtl">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
-        <div className="mb-6">
-          <h1 className="text-2xl md:text-3xl font-bold text-gray-800">إضافة منتج</h1>
+        <div className="mb-8">
+          <div className="flex items-center gap-3 mb-2">
+            <Package className="w-8 h-8 text-indigo-600" />
+            <h1 className="text-3xl md:text-4xl font-bold text-gray-800">إضافة منتج جديد</h1>
+          </div>
+          <p className="text-gray-600 mr-11">أنشئ منتجًا جديدًا لمتجرك</p>
         </div>
 
         <form onSubmit={handleSubmit} className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          {/* Section principale - 2/3 de la largeur sur desktop */}
+          {/* Main Content - Left Side */}
           <div className="lg:col-span-2 space-y-6">
-            {/* Carte: Informations générales */}
-            <div className="bg-white rounded-lg shadow-sm p-6">
-              <div className="space-y-4">
-                {/* Nom du produit */}
+            
+            {/* Basic Information */}
+            <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow">
+              <div className="flex items-center gap-2 mb-6">
+                <FileText className="w-5 h-5 text-indigo-600" />
+                <h2 className="text-xl font-semibold text-gray-800">المعلومات الأساسية</h2>
+              </div>
+              
+              <div className="space-y-5">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    الاسم (مثال: قميص صيفي أزرق)
+                    اسم المنتج *
                   </label>
                   <input
                     type="text"
                     name="name"
                     value={formData.name}
                     onChange={handleChange}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent outline-none transition"
-                    placeholder="اسم المنتج"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none transition"
+                    placeholder="مثال: سماعات لاسلكية فاخرة"
+                    required
                   />
                 </div>
 
-                {/* URL */}
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    الرابط
+                    الوصف
                   </label>
-                  <div className="flex items-center border border-gray-300 rounded-lg overflow-hidden">
-                    <span className="px-4 py-2 bg-gray-50 text-gray-500 text-sm border-l border-gray-300">
-                      /https://nouhallolicloud.com/products
-                    </span>
+                  <textarea
+                    name="description"
+                    value={formData.description}
+                    onChange={handleChange}
+                    rows="6"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none resize-none transition"
+                    placeholder="اكتب وصفاً تفصيلياً للمنتج..."
+                  />
+                </div>
+              </div>
+            </div>
+
+            {/* Pricing */}
+            <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow">
+              <div className="flex items-center gap-2 mb-6">
+                <DollarSign className="w-5 h-5 text-green-600" />
+                <h2 className="text-xl font-semibold text-gray-800">التسعير</h2>
+              </div>
+              
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    السعر *
+                  </label>
+                  <div className="relative">
+                    <span className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500">د.م</span>
                     <input
-                      type="text"
-                      name="url"
-                      value={formData.url}
+                      type="number"
+                      name="price"
+                      value={formData.price}
                       onChange={handleChange}
-                      className="flex-1 px-4 py-2 outline-none focus:ring-2 focus:ring-pink-500"
+                      className="w-full pr-12 pl-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none"
+                      placeholder="0.00"
+                      step="0.01"
+                      required
                     />
                   </div>
                 </div>
 
-                {/* Éditeur de texte */}
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    اكتر التفة
+                    سعر المقارنة
                   </label>
-                  <div className="border border-gray-300 rounded-lg overflow-hidden">
-                    {/* Barre d'outils */}
-                    <div className="flex flex-wrap items-center gap-2 p-2 bg-gray-50 border-b border-gray-300">
-                      <button type="button" className="p-2 hover:bg-gray-200 rounded">📷</button>
-                      <button type="button" className="p-2 hover:bg-gray-200 rounded">🖼️</button>
-                      <button type="button" className="p-2 hover:bg-gray-200 rounded">↩️</button>
-                      <button type="button" className="p-2 hover:bg-gray-200 rounded">↪️</button>
-                      <button type="button" className="p-2 hover:bg-gray-200 rounded">&lt;/&gt;</button>
-                      <button type="button" className="p-2 hover:bg-gray-200 rounded">—</button>
-                      <button type="button" className="p-2 hover:bg-gray-200 rounded">Ω</button>
-                      <button type="button" className="p-2 hover:bg-gray-200 rounded">☺</button>
-                      <button type="button" className="p-2 hover:bg-gray-200 rounded">⊞</button>
-                      <button type="button" className="p-2 hover:bg-gray-200 rounded">🔗</button>
-                      <button type="button" className="p-2 hover:bg-gray-200 rounded"><b>B</b></button>
-                      <button type="button" className="p-2 hover:bg-gray-200 rounded"><i>I</i></button>
-                      <button type="button" className="p-2 hover:bg-gray-200 rounded"><u>U</u></button>
-                    </div>
-                    <textarea
-                      rows="8"
-                      className="w-full p-4 outline-none focus:ring-2 focus:ring-pink-500 resize-none"
-                      placeholder="الكتل وصفا للمنتج"
-                    ></textarea>
+                  <div className="relative">
+                    <span className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500">د.م</span>
+                    <input
+                      type="number"
+                      name="comparePrice"
+                      value={formData.comparePrice}
+                      onChange={handleChange}
+                      className="w-full pr-12 pl-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none"
+                      placeholder="0.00"
+                      step="0.01"
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    سعر التكلفة
+                  </label>
+                  <div className="relative">
+                    <span className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500">د.م</span>
+                    <input
+                      type="number"
+                      name="costPrice"
+                      value={formData.costPrice}
+                      onChange={handleChange}
+                      className="w-full pr-12 pl-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none"
+                      placeholder="0.00"
+                      step="0.01"
+                    />
                   </div>
                 </div>
               </div>
             </div>
 
-            {/* Carte: Prix */}
-            <div className="bg-white rounded-lg shadow-sm p-6">
-              <h2 className="text-lg font-semibold mb-4">التسعير</h2>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    السعر
-                  </label>
-                  <input
-                    type="number"
-                    name="price"
-                    value={formData.price}
-                    onChange={handleChange}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 outline-none"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    مقارنة السعر
-                  </label>
-                  <input
-                    type="number"
-                    name="comparePrice"
-                    value={formData.comparePrice}
-                    onChange={handleChange}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 outline-none"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    سعر التكلفة
-                  </label>
-                  <input
-                    type="number"
-                    name="costPrice"
-                    value={formData.costPrice}
-                    onChange={handleChange}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 outline-none"
-                  />
-                </div>
+            {/* Inventory */}
+            <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow">
+              <div className="flex items-center gap-2 mb-6">
+                <Box className="w-5 h-5 text-orange-600" />
+                <h2 className="text-xl font-semibold text-gray-800">المخزون</h2>
               </div>
-            </div>
-
-            {/* Carte: Stock */}
-            <div className="bg-white rounded-lg shadow-sm p-6">
-              <h2 className="text-lg font-semibold mb-4">المخزون</h2>
+              
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    SKU
+                    رمز SKU
                   </label>
                   <input
                     type="text"
                     name="sku"
                     value={formData.sku}
                     onChange={handleChange}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 outline-none"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none"
+                    placeholder="PROD-001"
                   />
                 </div>
+
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
                     الباركود
@@ -181,177 +190,147 @@ const AddProduit = () => {
                     name="barcode"
                     value={formData.barcode}
                     onChange={handleChange}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 outline-none"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none"
+                    placeholder="123456789"
                   />
                 </div>
-                <div>
+
+                <div className="md:col-span-2">
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    الوزن
-                  </label>
-                  <input
-                    type="text"
-                    name="weight"
-                    value={formData.weight}
-                    onChange={handleChange}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 outline-none"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    الكمية
+                    الكمية المتوفرة *
                   </label>
                   <input
                     type="number"
                     name="stock"
                     value={formData.stock}
                     onChange={handleChange}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 outline-none"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none"
+                    placeholder="0"
+                    required
                   />
                 </div>
               </div>
             </div>
+
           </div>
 
-          {/* Sidebar droite - 1/3 de la largeur sur desktop */}
+          {/* Sidebar - Right Side */}
           <div className="lg:col-span-1 space-y-6">
-            {/* Carte: Apparence du produit */}
-            <div className="bg-white rounded-lg shadow-sm p-6">
-              <h2 className="text-lg font-semibold mb-4">ظهور المنتج</h2>
-              <div className="space-y-4">
-                <button 
-                  type="button"
-                  className="w-full px-4 py-2 bg-pink-600 text-white rounded-lg hover:bg-pink-700 transition font-medium"
-                >
-                  إظهار المنتج
-                </button>
-                <button 
-                  type="button"
-                  className="w-full px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition font-medium flex items-center justify-center gap-2"
-                >
-                  <span>رفع الصور</span>
-                  <span>📁</span>
-                </button>
+            
+            {/* Product Status */}
+            <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow">
+              <div className="flex items-center gap-2 mb-4">
+                <Eye className="w-5 h-5 text-indigo-600" />
+                <h2 className="text-lg font-semibold text-gray-800">حالة المنتج</h2>
               </div>
-            </div>
-
-            {/* Carte: Détails de stockage */}
-            <div className="bg-white rounded-lg shadow-sm p-6">
-              <h2 className="text-lg font-semibold mb-4">تفاصيل التخزين</h2>
-              <div className="space-y-4">
-                <div>
+              
+              <div className="space-y-3">
+                <label className="flex items-center gap-3 cursor-pointer">
                   <input
-                    type="text"
-                    placeholder="البحث عن التصنيفات"
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 outline-none"
+                    type="checkbox"
+                    className="w-4 h-4 text-indigo-600 rounded focus:ring-2 focus:ring-indigo-500"
+                    defaultChecked
                   />
-                </div>
-                <button 
-                  type="button"
-                  className="text-pink-600 hover:text-pink-700 text-sm font-medium"
-                >
-                  + أضف تصنيفا جديدا
-                </button>
-              </div>
-            </div>
-
-            {/* Carte: Catégories */}
-            <div className="bg-white rounded-lg shadow-sm p-6">
-              <h2 className="text-lg font-semibold mb-4">الفئات</h2>
-              <input
-                type="text"
-                name="category"
-                value={formData.category}
-                onChange={handleChange}
-                placeholder="اكتب (فئم باعتماد الفواصل)"
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 outline-none"
-              />
-            </div>
-
-            {/* Carte: Image */}
-            <div className="bg-white rounded-lg shadow-sm p-6">
-              <h2 className="text-lg font-semibold mb-4">الصور</h2>
-              <div className="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center hover:border-pink-500 transition cursor-pointer">
-                <input
-                  type="file"
-                  id="imageUpload"
-                  onChange={handleImageUpload}
-                  className="hidden"
-                  accept="image/*"
-                />
-                <label htmlFor="imageUpload" className="cursor-pointer">
-                  <div className="text-blue-500 mb-2">📎</div>
-                  <p className="text-sm text-gray-600">
-                    ملاحظة: الحصول على أفضل نتائج استخدم صور المنتج بحجم 800 × 800
-                  </p>
-                  <div className="mt-4 flex gap-2 justify-center flex-wrap">
-                    <button type="button" className="px-4 py-2 bg-pink-600 text-white rounded-lg text-sm hover:bg-pink-700">
-                      أضف رابط الفيديو
-                    </button>
-                    <button type="button" className="px-4 py-2 border border-pink-600 text-pink-600 rounded-lg text-sm hover:bg-pink-50">
-                      رفع الصور
-                    </button>
-                    <button type="button" className="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg text-sm hover:bg-gray-200">
-                      إلغاء
-                    </button>
-                  </div>
+                  <span className="text-sm text-gray-700">نشط</span>
+                </label>
+                
+                <label className="flex items-center gap-3 cursor-pointer">
+                  <input
+                    type="checkbox"
+                    className="w-4 h-4 text-indigo-600 rounded focus:ring-2 focus:ring-indigo-500"
+                  />
+                  <span className="text-sm text-gray-700">مميز</span>
                 </label>
               </div>
             </div>
 
-            {/* Sections supplémentaires */}
-            <div className="bg-white rounded-lg shadow-sm p-6 space-y-4">
-              <details className="border-b border-gray-200 pb-4">
-                <summary className="cursor-pointer font-medium text-gray-700 flex items-center justify-between">
-                  <span>المتغيرات</span>
-                  <span className="text-gray-400">›</span>
-                </summary>
-              </details>
+            {/* Product Image */}
+            <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow">
+              <div className="flex items-center gap-2 mb-4">
+                <ImageIcon className="w-5 h-5 text-purple-600" />
+                <h2 className="text-lg font-semibold text-gray-800">الصور</h2>
+              </div>
               
-              <details className="border-b border-gray-200 pb-4">
-                <summary className="cursor-pointer font-medium text-gray-700 flex items-center justify-between">
-                  <span>المنتجات ذات الصلة</span>
-                  <span className="text-gray-400">›</span>
-                </summary>
-              </details>
-              
-              <details className="border-b border-gray-200 pb-4">
-                <summary className="cursor-pointer font-medium text-gray-700 flex items-center justify-between">
-                  <span>إخفاء</span>
-                  <span className="text-gray-400">›</span>
-                </summary>
-              </details>
-              
-              <details>
-                <summary className="cursor-pointer font-medium text-gray-700 flex items-center justify-between">
-                  <span>خيارات متقدمة</span>
-                  <span className="text-gray-400">›</span>
-                </summary>
-              </details>
+              <div className="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center hover:border-indigo-400 transition cursor-pointer">
+                <input
+                  type="file"
+                  id="imageUpload"
+                  multiple
+                  className="hidden"
+                  accept="image/*"
+                />
+                <label htmlFor="imageUpload" className="cursor-pointer">
+                  <ImageIcon className="w-12 h-12 text-gray-400 mx-auto mb-3" />
+                  <p className="text-sm font-medium text-gray-700 mb-1">
+                    اضغط لتحميل الصور
+                  </p>
+                  <p className="text-xs text-gray-500">
+                    PNG, JPG حتى 10 ميجابايت
+                  </p>
+                </label>
+              </div>
             </div>
+
+            {/* Category */}
+            <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow">
+              <div className="flex items-center gap-2 mb-4">
+                <Folder className="w-5 h-5 text-blue-600" />
+                <h2 className="text-lg font-semibold text-gray-800">التصنيف</h2>
+              </div>
+              
+              <select
+                name="category"
+                value={formData.category}
+                onChange={handleChange}
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none"
+              >
+                <option value="">اختر التصنيف</option>
+                <option value="electronics">الإلكترونيات</option>
+                <option value="clothing">الملابس</option>
+                <option value="accessories">الإكسسوارات</option>
+                <option value="home">المنزل والحديقة</option>
+                <option value="sports">الرياضة</option>
+              </select>
+            </div>
+
+            {/* Tags */}
+            <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow">
+              <div className="flex items-center gap-2 mb-4">
+                <Tag className="w-5 h-5 text-pink-600" />
+                <h2 className="text-lg font-semibold text-gray-800">الوسوم</h2>
+              </div>
+              
+              <input
+                type="text"
+                name="tags"
+                value={formData.tags}
+                onChange={handleChange}
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none"
+                placeholder="لاسلكي، فاخر، جديد"
+              />
+              <p className="text-xs text-gray-500 mt-2">افصل الوسوم بفواصل</p>
+            </div>
+
           </div>
         </form>
 
-        {/* Bouton de sauvegarde fixe en bas sur mobile */}
-        <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 p-4 lg:hidden shadow-lg">
-          <button 
-            type="submit"
-            onClick={handleSubmit}
-            className="w-full px-6 py-3 bg-pink-600 text-white rounded-lg hover:bg-pink-700 transition font-medium flex items-center justify-center gap-2"
+        {/* Action Buttons */}
+        <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-end sticky bottom-4 bg-white/80 backdrop-blur-sm p-4 rounded-xl border border-gray-200 shadow-lg">
+          <button
+            type="button"
+            className="px-6 py-3 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition font-medium flex items-center justify-center gap-2"
           >
-            <span>💾</span>
-            <span>حفظ</span>
+            <Eye className="w-5 h-5" />
+            معاينة
           </button>
-        </div>
-
-        {/* Bouton de sauvegarde normal sur desktop */}
-        <div className="hidden lg:block mt-6">
-          <button 
+          
+          <button
             type="submit"
             onClick={handleSubmit}
-            className="px-6 py-3 bg-pink-600 text-white rounded-lg hover:bg-pink-700 transition font-medium flex items-center gap-2"
+            className="px-6 py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition font-medium flex items-center justify-center gap-2 shadow-md"
           >
-            <span>💾</span>
-            <span>حفظ</span>
+            <Save className="w-5 h-5" />
+            حفظ المنتج
           </button>
         </div>
       </div>
