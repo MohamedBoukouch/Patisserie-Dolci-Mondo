@@ -30,7 +30,7 @@ const Sidebar = ({ isOpen, toggleSidebar, isCollapsed, toggleCollapse }) => {
   const menuItems = [
     {
       name: "لوحة التحكم",
-      path: "/admin",
+      path: "/admin/home",
       icon: Home,
       end: true,
     },
@@ -71,8 +71,8 @@ const Sidebar = ({ isOpen, toggleSidebar, isCollapsed, toggleCollapse }) => {
       icon: FileText,
     },
     {
-      name: "التطبيقات",
-      path: "/admin/applications",
+      name: "حسابات فريق العمل",
+      path: "/admin/team",
       icon: Settings,
     },
   ];
