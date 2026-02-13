@@ -18,7 +18,7 @@ import Auth from "./views/admin/Auth";
 import Orders from "./views/admin/Orders";
 import AllProduct from "./views/admin/products/AllProducts";
 import AddProduct from "./views/admin/products/AddProduit";
-import Collections from "./views/admin/products/Collections";
+import Collections from "./views/admin/collections/Collections";
 import Team from "./views/admin/Team";
 
 function App() {

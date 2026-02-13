@@ -57,7 +57,7 @@ const Sidebar = ({ isOpen, toggleSidebar, isCollapsed, toggleCollapse }) => {
     },
     {
       name: "متجر",
-      path: "/admin/store",
+      path: "/",
       icon: Store,
     },
     {
