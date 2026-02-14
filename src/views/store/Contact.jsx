@@ -43,7 +43,7 @@ const Contact = () => {
                 <div>
                   <p className="text-xs sm:text-sm text-gray-500 mb-1 font-light">{t("contact.phone")}</p>
                   <a href={`tel:+966533622117`} className="text-sm sm:text-base text-gray-700 hover:text-amber-600 font-light transition">
-                    +966533622117
+                    {t("footer.contactInfo.phone")}
                   </a>
                 </div>
               </div>
@@ -53,8 +53,8 @@ const Contact = () => {
                 <Mail className="w-5 h-5 sm:w-6 sm:h-6 text-amber-600 mt-1" />
                 <div>
                   <p className="text-xs sm:text-sm text-gray-500 mb-1 font-light">{t("contact.email")}</p>
-                  <a href={`mailto:info@dolcimondo.com`} className="text-sm sm:text-base text-gray-700 hover:text-amber-600 font-light break-all transition">
-                    info@dolcimondo.com
+                  <a href={`mailto:contact@dolci-mondo.com`} className="text-sm sm:text-base text-gray-700 hover:text-amber-600 font-light break-all transition">
+                  {t("footer.contactInfo.email")}
                   </a>
                 </div>
               </div>
@@ -69,11 +69,12 @@ const Contact = () => {
           </div>
 
           {/* Right: Map */}
+          {/* Right: Map */}
           <div className="rounded-lg overflow-hidden shadow-lg">
-            <a href="https://maps.app.goo.gl/2u1XMs6fzCn8XSic9" target="_blank" rel="noopener noreferrer">
+            <a href="https://maps.app.goo.gl/CX58G7WfJkP5Z2uH9" target="_blank" rel="noopener noreferrer">
               <iframe
                 title={t("contact.mainTitle")}
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3624.968022212886!2d-9.598088684487722!3d30.427755481812507!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xda70f8e9f3b27cf%3A0x2a1b1cbe1d2e1a2c!2sAgadir%2C%20Morocco!5e0!3m2!1sen!2sma!4v1600000000000!5m2!1sen!2sma"
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3660.123456789012!2d45.960000!3d28.433000!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e33f123456789ab%3A0xabcdef1234567890!2sCX58%2BG7W%2C%20King%20Abdullah%20Rd%2C%20Al%20Khalidiyah%2C%20Hafar%20Al%20Batin%2039953%2C%20Saudi%20Arabia!5e0!3m2!1sen!2sar!4v1600000000000!5m2!1sen!2sar"
                 width="100%"
                 height="100%"
                 className="h-64 sm:h-80 lg:h-96 w-full border-0"
@@ -82,6 +83,7 @@ const Contact = () => {
               ></iframe>
             </a>
           </div>
+
         </div>
       </section>
 
