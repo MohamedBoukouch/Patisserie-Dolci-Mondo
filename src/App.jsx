@@ -20,6 +20,7 @@ import AllProduct from "./views/admin/products/AllProducts";
 import AddProduct from "./views/admin/products/AddProduit";
 import Collections from "./views/admin/collections/Collections";
 import Team from "./views/admin/Team";
+import OrderConfirmation from "./views/admin/OrderConfirmation";
 
 function App() {
   useEffect(() => {
@@ -51,6 +52,7 @@ function App() {
         <Route path="home" element={<AdminHome />} />
         <Route path="orders" element={<Orders />} />
         <Route path="team" element={<Team />} />
+        <Route path="order_confirmation" element={<OrderConfirmation />} />
 
         <Route path="products">
           <Route index element={<AllProduct />} />

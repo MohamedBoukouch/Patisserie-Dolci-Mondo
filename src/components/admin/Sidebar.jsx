@@ -66,8 +66,8 @@ const Sidebar = ({ isOpen, toggleSidebar, isCollapsed, toggleCollapse }) => {
       icon: BarChart3,
     },
     {
-      name: "الفواتير",
-      path: "/admin/invoices",
+      name: "تأكيد الطلبيات",
+      path: "/admin/order_confirmation",
       icon: FileText,
     },
     {
