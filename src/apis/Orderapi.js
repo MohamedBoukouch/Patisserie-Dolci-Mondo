@@ -18,7 +18,7 @@ axios.interceptors.request.use(
 
 axios.interceptors.response.use(
   (response) => {
-    console.log('Response received:', response.data);
+    console.log('Response received from backend');
     return response;
   },
   (error) => {
@@ -26,6 +26,38 @@ axios.interceptors.response.use(
     return Promise.reject(error);
   }
 );
+
+/**
+ * Transform backend order data to frontend format
+ * IMPORTANT: Handles circular references by breaking the order->items->order chain
+ */
+const transformOrderData = (order) => {
+  // Break circular reference by not including the nested order in items
+  const cleanItems = order.items?.map(item => ({
+    id: item.id,
+    quantity: item.quantity,
+    price: item.price,
+    // Create product object from item data
+    product: {
+      nom: item.productName || 'منتج',
+      newPrice: item.price,
+      image: item.productImage || null
+    }
+  })) || [];
+
+  return {
+    id: order.id,
+    reference: order.reference,
+    clientFullName: order.clientFullName,
+    clientPhone: order.clientPhone,
+    clientAddress: order.clientAddress,
+    totalPrice: order.totalPrice,
+    status: order.status,
+    createdAt: order.createdAt,
+    // Map 'items' to 'orderItems' for frontend compatibility
+    orderItems: cleanItems
+  };
+};
 
 /**
  * Get all orders
@@ -38,12 +70,28 @@ export const fetchOrders = async () => {
       headers: {
         'Content-Type': 'application/json',
       },
-      timeout: 10000, // 10 second timeout
+      timeout: 10000,
     });
     
-    console.log('Orders fetched successfully:', response.data);
+    console.log('Raw response data received');
     const data = response.data;
-    return Array.isArray(data) ? data : [];
+    
+    // Check if data is valid
+    if (!data) {
+      console.error('No data received from backend');
+      return [];
+    }
+
+    // Transform the data to match frontend expectations and break circular references
+    if (Array.isArray(data)) {
+      console.log(`Transforming ${data.length} orders`);
+      const transformedOrders = data.map(order => transformOrderData(order));
+      console.log('Orders transformed successfully:', transformedOrders);
+      return transformedOrders;
+    }
+    
+    console.warn('Data is not an array:', typeof data);
+    return [];
   } catch (error) {
     console.error("Error fetching orders:", error);
     
@@ -53,6 +101,8 @@ export const fetchOrders = async () => {
     } else if (error.response) {
       console.error('Server responded with error:', error.response.status, error.response.data);
       alert(`خطأ من الخادم: ${error.response.status}`);
+    } else if (error.message) {
+      console.error('Error message:', error.message);
     }
     
     return [];
@@ -71,8 +121,8 @@ export const createOrder = async (orderData) => {
         'Content-Type': 'application/json',
       },
     });
-    console.log('Order created:', response.data);
-    return response.data;
+    console.log('Order created successfully');
+    return transformOrderData(response.data);
   } catch (error) {
     console.error("Error creating order:", error.response || error);
     throw error;
@@ -92,8 +142,8 @@ export const updateOrderStatus = async (id, status) => {
         'Content-Type': 'application/json',
       },
     });
-    console.log('Order updated:', response.data);
-    return response.data;
+    console.log('Order status updated successfully');
+    return transformOrderData(response.data);
   } catch (error) {
     console.error("Error updating order status:", error.response || error);
     throw error;
@@ -126,7 +176,8 @@ export const deleteOrder = async (id) => {
 export const ORDER_STATUS = {
   PENDING: 'PENDING',
   CONFIRMED: 'CONFIRMED',
-  SHIPPED: 'SHIPPED',
+  CANCELLED: 'CANCELLED',
+  NO_RESPONSE: 'NO_RESPONSE',
   DELIVERED: 'DELIVERED',
-  CANCELLED: 'CANCELLED'
+  OUT_FOR_DELIVERY: 'OUT_FOR_DELIVERY'
 };
