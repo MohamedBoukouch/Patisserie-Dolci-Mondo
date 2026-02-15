@@ -11,14 +11,12 @@ import {
   User,
   Phone,
   MapPin,
-  CreditCard,
   Calendar,
   ChevronDown,
-  Mail,
   DollarSign,
-  AlertCircle,
-  MoreVertical
+  RefreshCw
 } from 'lucide-react';
+import { fetchOrders, updateOrderStatus, deleteOrder, ORDER_STATUS } from '../../apis/Orderapi';
 
 const OrdersManagement = () => {
   const [orders, setOrders] = useState([]);
@@ -27,8 +25,8 @@ const OrdersManagement = () => {
   const [statusFilter, setStatusFilter] = useState('all');
   const [selectedOrder, setSelectedOrder] = useState(null);
   const [showDetailsModal, setShowDetailsModal] = useState(false);
+  const [updating, setUpdating] = useState(false);
 
-  // Example orders data (replace with your API)
   useEffect(() => {
     loadOrders();
   }, []);
@@ -36,179 +34,89 @@ const OrdersManagement = () => {
   const loadOrders = async () => {
     try {
       setLoading(true);
-      // Simulate API call
-      const mockOrders = [
-        {
-          id: 1,
-          orderNumber: 'ORD-2024-001',
-          customer: {
-            name: 'محمد أحمد',
-            email: 'mohamed@example.com',
-            phone: '+212 6 12 34 56 78'
-          },
-          items: [
-            {
-              id: 1,
-              name: 'كعكة الشوكولاتة',
-              image: 'https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=400',
-              quantity: 2,
-              price: 150.00
-            },
-            {
-              id: 2,
-              name: 'كوكيز الفانيليا',
-              image: 'https://images.unsplash.com/photo-1558961363-fa8fdf82db35?w=400',
-              quantity: 1,
-              price: 80.00
-            }
-          ],
-          shippingAddress: {
-            street: 'شارع الحسن الثاني، رقم 123',
-            city: 'الدار البيضاء',
-            zipCode: '20000',
-            country: 'المغرب'
-          },
-          payment: {
-            method: 'بطاقة ائتمان',
-            status: 'مدفوع'
-          },
-          total: 380.00,
-          status: 'pending',
-          orderDate: '2024-02-14 10:30',
-          estimatedDelivery: '2024-02-20'
-        },
-        {
-          id: 2,
-          orderNumber: 'ORD-2024-002',
-          customer: {
-            name: 'فاطمة الزهراء',
-            email: 'fatima@example.com',
-            phone: '+212 6 98 76 54 32'
-          },
-          items: [
-            {
-              id: 3,
-              name: 'تارت الفواكه',
-              image: 'https://images.unsplash.com/photo-1464349095431-e9a21285b5f3?w=400',
-              quantity: 1,
-              price: 120.00
-            }
-          ],
-          shippingAddress: {
-            street: 'شارع محمد الخامس، رقم 456',
-            city: 'الرباط',
-            zipCode: '10000',
-            country: 'المغرب'
-          },
-          payment: {
-            method: 'الدفع عند الاستلام',
-            status: 'قيد الانتظار'
-          },
-          total: 150.00,
-          status: 'confirmed',
-          orderDate: '2024-02-14 11:15',
-          estimatedDelivery: '2024-02-21'
-        },
-        {
-          id: 3,
-          orderNumber: 'ORD-2024-003',
-          customer: {
-            name: 'عمر حسن',
-            email: 'omar@example.com',
-            phone: '+212 6 55 44 33 22'
-          },
-          items: [
-            {
-              id: 4,
-              name: 'ماكارون ملون',
-              image: 'https://images.unsplash.com/photo-1569864358642-9d1684040f43?w=400',
-              quantity: 3,
-              price: 200.00
-            }
-          ],
-          shippingAddress: {
-            street: 'شارع الأطلس، رقم 789',
-            city: 'مراكش',
-            zipCode: '40000',
-            country: 'المغرب'
-          },
-          payment: {
-            method: 'بطاقة ائتمان',
-            status: 'مدفوع'
-          },
-          total: 630.00,
-          status: 'shipped',
-          orderDate: '2024-02-13 14:20',
-          estimatedDelivery: '2024-02-19'
-        }
-      ];
-      
-      setOrders(mockOrders);
+      const data = await fetchOrders();
+      console.log('Fetched orders:', data); // Debug log
+      // Ensure data is an array
+      setOrders(Array.isArray(data) ? data : []);
     } catch (error) {
       console.error('Error loading orders:', error);
+      setOrders([]); // Set empty array on error
       alert('فشل تحميل الطلبات');
     } finally {
       setLoading(false);
     }
   };
 
-  const filteredOrders = orders.filter(order => {
+  const filteredOrders = Array.isArray(orders) ? orders.filter(order => {
     const matchesSearch = 
-      order.orderNumber.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      order.customer.name.toLowerCase().includes(searchTerm.toLowerCase());
+      order.id?.toString().includes(searchTerm) ||
+      order.clientFullName?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      order.clientPhone?.includes(searchTerm);
     
     const matchesStatus = statusFilter === 'all' || order.status === statusFilter;
     
     return matchesSearch && matchesStatus;
-  });
+  }) : [];
 
   const getStatusColor = (status) => {
     const colors = {
-      pending: 'bg-yellow-100 text-yellow-700 border-yellow-200',
-      confirmed: 'bg-blue-100 text-blue-700 border-blue-200',
-      shipped: 'bg-purple-100 text-purple-700 border-purple-200',
-      delivered: 'bg-green-100 text-green-700 border-green-200',
-      cancelled: 'bg-red-100 text-red-700 border-red-200'
+      PENDING: 'bg-yellow-100 text-yellow-700 border-yellow-200',
+      CONFIRMED: 'bg-blue-100 text-blue-700 border-blue-200',
+      SHIPPED: 'bg-purple-100 text-purple-700 border-purple-200',
+      DELIVERED: 'bg-green-100 text-green-700 border-green-200',
+      CANCELLED: 'bg-red-100 text-red-700 border-red-200'
     };
     return colors[status] || 'bg-gray-100 text-gray-700 border-gray-200';
   };
 
   const getStatusText = (status) => {
     const texts = {
-      pending: 'قيد الانتظار',
-      confirmed: 'مؤكد',
-      shipped: 'تم الشحن',
-      delivered: 'تم التوصيل',
-      cancelled: 'ملغى'
+      PENDING: 'قيد الانتظار',
+      CONFIRMED: 'مؤكد',
+      SHIPPED: 'تم الشحن',
+      DELIVERED: 'تم التوصيل',
+      CANCELLED: 'ملغى'
     };
     return texts[status] || status;
   };
 
   const getStatusIcon = (status) => {
     const icons = {
-      pending: <Clock className="w-4 h-4" />,
-      confirmed: <CheckCircle className="w-4 h-4" />,
-      shipped: <Truck className="w-4 h-4" />,
-      delivered: <CheckCircle className="w-4 h-4" />,
-      cancelled: <XCircle className="w-4 h-4" />
+      PENDING: <Clock className="w-4 h-4" />,
+      CONFIRMED: <CheckCircle className="w-4 h-4" />,
+      SHIPPED: <Truck className="w-4 h-4" />,
+      DELIVERED: <CheckCircle className="w-4 h-4" />,
+      CANCELLED: <XCircle className="w-4 h-4" />
     };
-    return icons[status] || <AlertCircle className="w-4 h-4" />;
+    return icons[status] || <Clock className="w-4 h-4" />;
+  };
+
+  const calculateOrderTotal = (order) => {
+    if (!order.orderItems || order.orderItems.length === 0) return 0;
+    return order.orderItems.reduce((total, item) => {
+      const price = item.product?.newPrice || 0;
+      const quantity = item.quantity || 0;
+      return total + (price * quantity);
+    }, 0);
   };
 
   const handleConfirmOrder = async (orderId) => {
     if (!window.confirm('هل أنت متأكد من تأكيد هذا الطلب؟')) return;
 
     try {
-      // API call to confirm order
+      setUpdating(true);
+      const updatedOrder = await updateOrderStatus(orderId, ORDER_STATUS.CONFIRMED);
+      
       setOrders(orders.map(order => 
-        order.id === orderId 
-          ? { ...order, status: 'confirmed' }
-          : order
+        order.id === orderId ? updatedOrder : order
       ));
+      
       alert('تم تأكيد الطلب بنجاح');
     } catch (error) {
       console.error('Error confirming order:', error);
       alert('فشل تأكيد الطلب');
+    } finally {
+      setUpdating(false);
     }
   };
 
@@ -216,30 +124,68 @@ const OrdersManagement = () => {
     if (!window.confirm('هل أنت متأكد من رفض هذا الطلب؟')) return;
 
     try {
-      // API call to cancel order
+      setUpdating(true);
+      const updatedOrder = await updateOrderStatus(orderId, ORDER_STATUS.CANCELLED);
+      
       setOrders(orders.map(order => 
-        order.id === orderId 
-          ? { ...order, status: 'cancelled' }
-          : order
+        order.id === orderId ? updatedOrder : order
       ));
+      
       alert('تم رفض الطلب');
     } catch (error) {
       console.error('Error cancelling order:', error);
       alert('فشل رفض الطلب');
+    } finally {
+      setUpdating(false);
     }
   };
 
   const handleMarkAsShipped = async (orderId) => {
     try {
+      setUpdating(true);
+      const updatedOrder = await updateOrderStatus(orderId, ORDER_STATUS.SHIPPED);
+      
       setOrders(orders.map(order => 
-        order.id === orderId 
-          ? { ...order, status: 'shipped' }
-          : order
+        order.id === orderId ? updatedOrder : order
       ));
+      
       alert('تم تحديث حالة الطلب إلى "تم الشحن"');
     } catch (error) {
       console.error('Error updating order:', error);
       alert('فشل تحديث حالة الطلب');
+    } finally {
+      setUpdating(false);
+    }
+  };
+
+  const handleMarkAsDelivered = async (orderId) => {
+    try {
+      setUpdating(true);
+      const updatedOrder = await updateOrderStatus(orderId, ORDER_STATUS.DELIVERED);
+      
+      setOrders(orders.map(order => 
+        order.id === orderId ? updatedOrder : order
+      ));
+      
+      alert('تم تحديث حالة الطلب إلى "تم التوصيل"');
+    } catch (error) {
+      console.error('Error updating order:', error);
+      alert('فشل تحديث حالة الطلب');
+    } finally {
+      setUpdating(false);
+    }
+  };
+
+  const handleDeleteOrder = async (orderId) => {
+    if (!window.confirm('هل أنت متأكد من حذف هذا الطلب؟ لا يمكن التراجع عن هذا الإجراء.')) return;
+
+    try {
+      await deleteOrder(orderId);
+      setOrders(orders.filter(order => order.id !== orderId));
+      alert('تم حذف الطلب بنجاح');
+    } catch (error) {
+      console.error('Error deleting order:', error);
+      alert('فشل حذف الطلب');
     }
   };
 
@@ -248,18 +194,45 @@ const OrdersManagement = () => {
     setShowDetailsModal(true);
   };
 
+  const formatDate = (dateString) => {
+    if (!dateString) return 'غير محدد';
+    try {
+      const date = new Date(dateString);
+      return date.toLocaleDateString('ar-MA', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+      });
+    } catch (error) {
+      return 'غير محدد';
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 p-4 md:p-8" dir="rtl">
       <div className="max-w-7xl mx-auto">
         
         {/* Header */}
         <div className="mb-8">
-          <div className="flex items-center gap-3 mb-6">
-            <Package className="w-8 h-8 text-indigo-600" />
-            <div>
-              <h1 className="text-3xl md:text-4xl font-bold text-gray-800">إدارة الطلبات</h1>
-              <p className="text-gray-600 mt-1">مراجعة وتأكيد طلبات العملاء</p>
+          <div className="flex items-center justify-between mb-6">
+            <div className="flex items-center gap-3">
+              <Package className="w-8 h-8 text-indigo-600" />
+              <div>
+                <h1 className="text-3xl md:text-4xl font-bold text-gray-800">إدارة الطلبات</h1>
+                <p className="text-gray-600 mt-1">مراجعة وتأكيد طلبات العملاء</p>
+              </div>
             </div>
+
+            <button
+              onClick={loadOrders}
+              disabled={loading}
+              className="flex items-center gap-2 px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition font-medium disabled:opacity-50"
+            >
+              <RefreshCw className={`w-5 h-5 ${loading ? 'animate-spin' : ''}`} />
+              <span className="hidden sm:inline">تحديث</span>
+            </button>
           </div>
 
           {/* Filters */}
@@ -272,7 +245,7 @@ const OrdersManagement = () => {
                   type="text"
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  placeholder="ابحث عن طلب برقم الطلب أو اسم العميل..."
+                  placeholder="ابحث برقم الطلب، اسم العميل أو رقم الهاتف..."
                   className="w-full pr-12 pl-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none"
                 />
               </div>
@@ -286,11 +259,11 @@ const OrdersManagement = () => {
                   className="w-full md:w-48 pr-12 pl-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none appearance-none cursor-pointer"
                 >
                   <option value="all">جميع الحالات</option>
-                  <option value="pending">قيد الانتظار</option>
-                  <option value="confirmed">مؤكد</option>
-                  <option value="shipped">تم الشحن</option>
-                  <option value="delivered">تم التوصيل</option>
-                  <option value="cancelled">ملغى</option>
+                  <option value="PENDING">قيد الانتظار</option>
+                  <option value="CONFIRMED">مؤكد</option>
+                  <option value="SHIPPED">تم الشحن</option>
+                  <option value="DELIVERED">تم التوصيل</option>
+                  <option value="CANCELLED">ملغى</option>
                 </select>
                 <ChevronDown className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 pointer-events-none" />
               </div>
@@ -306,25 +279,25 @@ const OrdersManagement = () => {
             <div className="bg-white rounded-lg p-4 border border-yellow-200 bg-yellow-50">
               <p className="text-sm text-yellow-700">قيد الانتظار</p>
               <p className="text-2xl font-bold text-yellow-600 mt-1">
-                {orders.filter(o => o.status === 'pending').length}
+                {orders.filter(o => o.status === 'PENDING').length}
               </p>
             </div>
             <div className="bg-white rounded-lg p-4 border border-blue-200 bg-blue-50">
               <p className="text-sm text-blue-700">مؤكد</p>
               <p className="text-2xl font-bold text-blue-600 mt-1">
-                {orders.filter(o => o.status === 'confirmed').length}
+                {orders.filter(o => o.status === 'CONFIRMED').length}
               </p>
             </div>
             <div className="bg-white rounded-lg p-4 border border-purple-200 bg-purple-50">
               <p className="text-sm text-purple-700">تم الشحن</p>
               <p className="text-2xl font-bold text-purple-600 mt-1">
-                {orders.filter(o => o.status === 'shipped').length}
+                {orders.filter(o => o.status === 'SHIPPED').length}
               </p>
             </div>
             <div className="bg-white rounded-lg p-4 border border-green-200 bg-green-50">
               <p className="text-sm text-green-700">تم التوصيل</p>
               <p className="text-2xl font-bold text-green-600 mt-1">
-                {orders.filter(o => o.status === 'delivered').length}
+                {orders.filter(o => o.status === 'DELIVERED').length}
               </p>
             </div>
           </div>
@@ -350,27 +323,25 @@ const OrdersManagement = () => {
                         <Package className="w-8 h-8 text-indigo-600" />
                       </div>
                       <div>
-                        <h3 className="text-lg font-bold text-gray-800 mb-1">{order.orderNumber}</h3>
+                        <h3 className="text-lg font-bold text-gray-800 mb-1">طلب #{order.id}</h3>
                         <div className="flex flex-wrap items-center gap-3 text-sm text-gray-600">
                           <span className="flex items-center gap-1">
                             <Calendar className="w-4 h-4" />
-                            {order.orderDate}
+                            {formatDate(order.createdAt)}
                           </span>
                           <span className="flex items-center gap-1">
                             <User className="w-4 h-4" />
-                            {order.customer.name}
+                            {order.clientFullName}
                           </span>
                         </div>
                       </div>
                     </div>
 
                     {/* Status Badge */}
-                    <div className="flex items-center gap-3">
-                      <span className={`inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium border ${getStatusColor(order.status)}`}>
-                        {getStatusIcon(order.status)}
-                        {getStatusText(order.status)}
-                      </span>
-                    </div>
+                    <span className={`inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium border ${getStatusColor(order.status)}`}>
+                      {getStatusIcon(order.status)}
+                      {getStatusText(order.status)}
+                    </span>
                   </div>
 
                   {/* Order Details Grid */}
@@ -381,11 +352,11 @@ const OrdersManagement = () => {
                       <div className="space-y-1">
                         <p className="text-sm font-medium text-gray-800 flex items-center gap-2">
                           <User className="w-4 h-4 text-gray-400" />
-                          {order.customer.name}
+                          {order.clientFullName}
                         </p>
                         <p className="text-xs text-gray-600 flex items-center gap-2">
                           <Phone className="w-3 h-3 text-gray-400" />
-                          {order.customer.phone}
+                          {order.clientPhone}
                         </p>
                       </div>
                     </div>
@@ -393,23 +364,22 @@ const OrdersManagement = () => {
                     {/* Address */}
                     <div className="bg-gray-50 rounded-lg p-3">
                       <p className="text-xs text-gray-500 mb-2">عنوان التوصيل</p>
-                      <p className="text-sm font-medium text-gray-800 flex items-center gap-2">
-                        <MapPin className="w-4 h-4 text-gray-400" />
-                        {order.shippingAddress.city}
-                      </p>
-                      <p className="text-xs text-gray-600 mt-1 line-clamp-2">
-                        {order.shippingAddress.street}
+                      <p className="text-sm font-medium text-gray-800 flex items-start gap-2">
+                        <MapPin className="w-4 h-4 text-gray-400 mt-0.5 flex-shrink-0" />
+                        <span className="line-clamp-2">{order.clientAddress}</span>
                       </p>
                     </div>
 
-                    {/* Payment */}
+                    {/* Items Count */}
                     <div className="bg-gray-50 rounded-lg p-3">
-                      <p className="text-xs text-gray-500 mb-2">الدفع</p>
+                      <p className="text-xs text-gray-500 mb-2">عدد المنتجات</p>
                       <p className="text-sm font-medium text-gray-800 flex items-center gap-2">
-                        <CreditCard className="w-4 h-4 text-gray-400" />
-                        {order.payment.method}
+                        <Package className="w-4 h-4 text-gray-400" />
+                        {order.orderItems?.length || 0} منتج
                       </p>
-                      <p className="text-xs text-gray-600 mt-1">{order.payment.status}</p>
+                      <p className="text-xs text-gray-600 mt-1">
+                        الكمية الإجمالية: {order.orderItems?.reduce((sum, item) => sum + item.quantity, 0) || 0}
+                      </p>
                     </div>
 
                     {/* Total */}
@@ -417,30 +387,37 @@ const OrdersManagement = () => {
                       <p className="text-xs text-indigo-100 mb-2">المجموع</p>
                       <p className="text-2xl font-bold flex items-center gap-2">
                         <DollarSign className="w-5 h-5" />
-                        {order.total.toFixed(2)} د.م
+                        {calculateOrderTotal(order).toFixed(2)} د.م
                       </p>
                     </div>
                   </div>
 
                   {/* Products Preview */}
-                  <div className="mb-4">
-                    <p className="text-xs text-gray-500 mb-2">المنتجات ({order.items.length})</p>
-                    <div className="flex gap-2 overflow-x-auto pb-2">
-                      {order.items.map((item) => (
-                        <div key={item.id} className="flex-shrink-0 flex items-center gap-2 bg-gray-50 rounded-lg p-2 pr-3">
-                          <img
-                            src={item.image}
-                            alt={item.name}
-                            className="w-12 h-12 object-cover rounded"
-                          />
-                          <div className="min-w-0">
-                            <p className="text-sm font-medium text-gray-800 truncate">{item.name}</p>
-                            <p className="text-xs text-gray-600">الكمية: {item.quantity}</p>
+                  {order.orderItems && order.orderItems.length > 0 && (
+                    <div className="mb-4">
+                      <p className="text-xs text-gray-500 mb-2">المنتجات ({order.orderItems.length})</p>
+                      <div className="flex gap-2 overflow-x-auto pb-2">
+                        {order.orderItems.map((item) => (
+                          <div key={item.id} className="flex-shrink-0 flex items-center gap-2 bg-gray-50 rounded-lg p-2 pr-3">
+                            {item.product?.image && (
+                              <img
+                                src={item.product.image}
+                                alt={item.product.nom}
+                                className="w-12 h-12 object-cover rounded"
+                                onError={(e) => {
+                                  e.target.src = 'https://via.placeholder.com/48?text=No+Image';
+                                }}
+                              />
+                            )}
+                            <div className="min-w-0">
+                              <p className="text-sm font-medium text-gray-800 truncate">{item.product?.nom || 'منتج'}</p>
+                              <p className="text-xs text-gray-600">الكمية: {item.quantity}</p>
+                            </div>
                           </div>
-                        </div>
-                      ))}
+                        ))}
+                      </div>
                     </div>
-                  </div>
+                  )}
 
                   {/* Actions */}
                   <div className="flex flex-wrap gap-2 pt-4 border-t border-gray-200">
@@ -452,18 +429,20 @@ const OrdersManagement = () => {
                       عرض التفاصيل
                     </button>
 
-                    {order.status === 'pending' && (
+                    {order.status === 'PENDING' && (
                       <>
                         <button
                           onClick={() => handleConfirmOrder(order.id)}
-                          className="flex items-center gap-2 px-4 py-2 bg-green-50 text-green-600 rounded-lg hover:bg-green-100 transition font-medium"
+                          disabled={updating}
+                          className="flex items-center gap-2 px-4 py-2 bg-green-50 text-green-600 rounded-lg hover:bg-green-100 transition font-medium disabled:opacity-50"
                         >
                           <CheckCircle className="w-4 h-4" />
                           تأكيد الطلب
                         </button>
                         <button
                           onClick={() => handleRejectOrder(order.id)}
-                          className="flex items-center gap-2 px-4 py-2 bg-red-50 text-red-600 rounded-lg hover:bg-red-100 transition font-medium"
+                          disabled={updating}
+                          className="flex items-center gap-2 px-4 py-2 bg-red-50 text-red-600 rounded-lg hover:bg-red-100 transition font-medium disabled:opacity-50"
                         >
                           <XCircle className="w-4 h-4" />
                           رفض الطلب
@@ -471,13 +450,35 @@ const OrdersManagement = () => {
                       </>
                     )}
 
-                    {order.status === 'confirmed' && (
+                    {order.status === 'CONFIRMED' && (
                       <button
                         onClick={() => handleMarkAsShipped(order.id)}
-                        className="flex items-center gap-2 px-4 py-2 bg-purple-50 text-purple-600 rounded-lg hover:bg-purple-100 transition font-medium"
+                        disabled={updating}
+                        className="flex items-center gap-2 px-4 py-2 bg-purple-50 text-purple-600 rounded-lg hover:bg-purple-100 transition font-medium disabled:opacity-50"
                       >
                         <Truck className="w-4 h-4" />
                         تم الشحن
+                      </button>
+                    )}
+
+                    {order.status === 'SHIPPED' && (
+                      <button
+                        onClick={() => handleMarkAsDelivered(order.id)}
+                        disabled={updating}
+                        className="flex items-center gap-2 px-4 py-2 bg-green-50 text-green-600 rounded-lg hover:bg-green-100 transition font-medium disabled:opacity-50"
+                      >
+                        <CheckCircle className="w-4 h-4" />
+                        تم التوصيل
+                      </button>
+                    )}
+
+                    {(order.status === 'CANCELLED' || order.status === 'DELIVERED') && (
+                      <button
+                        onClick={() => handleDeleteOrder(order.id)}
+                        className="flex items-center gap-2 px-4 py-2 bg-red-50 text-red-600 rounded-lg hover:bg-red-100 transition font-medium mr-auto"
+                      >
+                        <XCircle className="w-4 h-4" />
+                        حذف الطلب
                       </button>
                     )}
                   </div>
@@ -502,10 +503,10 @@ const OrdersManagement = () => {
         <div className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
           <div className="bg-white rounded-2xl shadow-2xl w-full max-w-4xl max-h-[90vh] overflow-y-auto">
             {/* Modal Header */}
-            <div className="sticky top-0 bg-white border-b border-gray-200 p-6 flex items-center justify-between rounded-t-2xl">
+            <div className="sticky top-0 bg-white border-b border-gray-200 p-6 flex items-center justify-between rounded-t-2xl z-10">
               <div>
                 <h2 className="text-2xl font-bold text-gray-800">تفاصيل الطلب</h2>
-                <p className="text-gray-600">{selectedOrder.orderNumber}</p>
+                <p className="text-gray-600">طلب #{selectedOrder.id}</p>
               </div>
               <button
                 onClick={() => setShowDetailsModal(false)}
@@ -517,6 +518,23 @@ const OrdersManagement = () => {
 
             {/* Modal Body */}
             <div className="p-6 space-y-6">
+              {/* Order Status */}
+              <div className="bg-gradient-to-r from-indigo-50 to-purple-50 rounded-xl p-4 border border-indigo-200">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-sm text-gray-600 mb-1">حالة الطلب</p>
+                    <span className={`inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium border ${getStatusColor(selectedOrder.status)}`}>
+                      {getStatusIcon(selectedOrder.status)}
+                      {getStatusText(selectedOrder.status)}
+                    </span>
+                  </div>
+                  <div className="text-right">
+                    <p className="text-sm text-gray-600 mb-1">تاريخ الطلب</p>
+                    <p className="font-semibold text-gray-800">{formatDate(selectedOrder.createdAt)}</p>
+                  </div>
+                </div>
+              </div>
+
               {/* Customer Info */}
               <div className="bg-gray-50 rounded-xl p-4">
                 <h3 className="font-bold text-gray-800 mb-3 flex items-center gap-2">
@@ -525,16 +543,12 @@ const OrdersManagement = () => {
                 </h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                   <div>
-                    <p className="text-xs text-gray-500">الاسم</p>
-                    <p className="font-medium text-gray-800">{selectedOrder.customer.name}</p>
-                  </div>
-                  <div>
-                    <p className="text-xs text-gray-500">البريد الإلكتروني</p>
-                    <p className="font-medium text-gray-800">{selectedOrder.customer.email}</p>
+                    <p className="text-xs text-gray-500">الاسم الكامل</p>
+                    <p className="font-medium text-gray-800">{selectedOrder.clientFullName}</p>
                   </div>
                   <div>
                     <p className="text-xs text-gray-500">رقم الهاتف</p>
-                    <p className="font-medium text-gray-800">{selectedOrder.customer.phone}</p>
+                    <p className="font-medium text-gray-800">{selectedOrder.clientPhone}</p>
                   </div>
                 </div>
               </div>
@@ -545,48 +559,59 @@ const OrdersManagement = () => {
                   <MapPin className="w-5 h-5 text-indigo-600" />
                   عنوان التوصيل
                 </h3>
-                <p className="text-gray-700">{selectedOrder.shippingAddress.street}</p>
-                <p className="text-gray-700">{selectedOrder.shippingAddress.city}, {selectedOrder.shippingAddress.zipCode}</p>
-                <p className="text-gray-700 font-semibold">{selectedOrder.shippingAddress.country}</p>
+                <p className="text-gray-700">{selectedOrder.clientAddress}</p>
               </div>
 
               {/* Products */}
               <div className="bg-gray-50 rounded-xl p-4">
                 <h3 className="font-bold text-gray-800 mb-3 flex items-center gap-2">
                   <Package className="w-5 h-5 text-indigo-600" />
-                  المنتجات
+                  المنتجات ({selectedOrder.orderItems?.length || 0})
                 </h3>
                 <div className="space-y-3">
-                  {selectedOrder.items.map((item) => (
+                  {selectedOrder.orderItems?.map((item) => (
                     <div key={item.id} className="flex items-center gap-4 bg-white rounded-lg p-3">
-                      <img src={item.image} alt={item.name} className="w-16 h-16 object-cover rounded" />
+                      {item.product?.image && (
+                        <img 
+                          src={item.product.image} 
+                          alt={item.product.nom} 
+                          className="w-16 h-16 object-cover rounded"
+                          onError={(e) => {
+                            e.target.src = 'https://via.placeholder.com/64?text=No+Image';
+                          }}
+                        />
+                      )}
                       <div className="flex-1">
-                        <p className="font-medium text-gray-800">{item.name}</p>
+                        <p className="font-medium text-gray-800">{item.product?.nom || 'منتج'}</p>
                         <p className="text-sm text-gray-600">الكمية: {item.quantity}</p>
+                        <p className="text-sm text-gray-600">السعر: {item.product?.newPrice?.toFixed(2)} د.م</p>
                       </div>
-                      <p className="font-bold text-indigo-600">{(item.price * item.quantity).toFixed(2)} د.م</p>
+                      <p className="font-bold text-indigo-600">
+                        {((item.product?.newPrice || 0) * item.quantity).toFixed(2)} د.م
+                      </p>
                     </div>
                   ))}
                 </div>
                 <div className="mt-4 pt-4 border-t border-gray-200">
                   <div className="flex justify-between text-xl font-bold">
                     <span>الإجمالي:</span>
-                    <span className="text-indigo-600">{selectedOrder.total.toFixed(2)} د.م</span>
+                    <span className="text-indigo-600">{calculateOrderTotal(selectedOrder).toFixed(2)} د.م</span>
                   </div>
                 </div>
               </div>
             </div>
 
             {/* Modal Footer */}
-            <div className="sticky bottom-0 bg-gray-50 border-t border-gray-200 p-6 rounded-b-2xl flex gap-3">
-              {selectedOrder.status === 'pending' && (
+            <div className="sticky bottom-0 bg-gray-50 border-t border-gray-200 p-6 rounded-b-2xl flex flex-wrap gap-3">
+              {selectedOrder.status === 'PENDING' && (
                 <>
                   <button
                     onClick={() => {
                       handleConfirmOrder(selectedOrder.id);
                       setShowDetailsModal(false);
                     }}
-                    className="flex-1 px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition font-medium flex items-center justify-center gap-2"
+                    disabled={updating}
+                    className="flex-1 px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition font-medium flex items-center justify-center gap-2 disabled:opacity-50"
                   >
                     <CheckCircle className="w-5 h-5" />
                     تأكيد الطلب
@@ -596,23 +621,38 @@ const OrdersManagement = () => {
                       handleRejectOrder(selectedOrder.id);
                       setShowDetailsModal(false);
                     }}
-                    className="flex-1 px-6 py-3 bg-red-600 text-white rounded-lg hover:bg-red-700 transition font-medium flex items-center justify-center gap-2"
+                    disabled={updating}
+                    className="flex-1 px-6 py-3 bg-red-600 text-white rounded-lg hover:bg-red-700 transition font-medium flex items-center justify-center gap-2 disabled:opacity-50"
                   >
                     <XCircle className="w-5 h-5" />
                     رفض الطلب
                   </button>
                 </>
               )}
-              {selectedOrder.status === 'confirmed' && (
+              {selectedOrder.status === 'CONFIRMED' && (
                 <button
                   onClick={() => {
                     handleMarkAsShipped(selectedOrder.id);
                     setShowDetailsModal(false);
                   }}
-                  className="flex-1 px-6 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition font-medium flex items-center justify-center gap-2"
+                  disabled={updating}
+                  className="flex-1 px-6 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition font-medium flex items-center justify-center gap-2 disabled:opacity-50"
                 >
                   <Truck className="w-5 h-5" />
                   تحديث إلى "تم الشحن"
+                </button>
+              )}
+              {selectedOrder.status === 'SHIPPED' && (
+                <button
+                  onClick={() => {
+                    handleMarkAsDelivered(selectedOrder.id);
+                    setShowDetailsModal(false);
+                  }}
+                  disabled={updating}
+                  className="flex-1 px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition font-medium flex items-center justify-center gap-2 disabled:opacity-50"
+                >
+                  <CheckCircle className="w-5 h-5" />
+                  تحديث إلى "تم التوصيل"
                 </button>
               )}
             </div>
