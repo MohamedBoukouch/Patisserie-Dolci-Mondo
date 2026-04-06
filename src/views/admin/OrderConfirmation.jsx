@@ -20,9 +20,9 @@ import {
   Tag,
   Layers
 } from 'lucide-react';
-import { fetchOrders, updateOrderStatus, deleteOrder, ORDER_STATUS } from '../../apis/OrderApi';
+import { fetchOrders, updateOrderStatus, deleteOrder, ORDER_STATUS } from '../../apis/orderApi';
 
-const OrdersManagement = () => {
+const OrdersManagement = (orderApi) => {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
