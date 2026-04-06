@@ -59,11 +59,9 @@
     },
 
     "categories": {
-        "wedding": "زفاف",
-        "newBaby": "مولود جديد",
-        "birthday": "عيد الميلاد",
-        "engagement": "خطوبة",
-        "anniversary": "ذكرى سنوية",
+        "arabic_sweets": "حلويات عربية",
+        "Box_of_the_gathering": "بوكس اللمة ",
+        "chocolate_box": "بوكس الشوكولاتة",
         "all": "عرض الكل"
     },
 

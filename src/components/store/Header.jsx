@@ -14,7 +14,7 @@ const Header = () => {
   const languages = [
     { code: "ar", name: "AR", fullName: "العربية" },
     { code: "en", name: "EN", fullName: "English" },
-    { code: "fr", name: "FR", fullName: "Français" }
+    { code: "fr", name: "FR", fullName: "Français" },
   ];
 
   const handleLanguageChange = (langCode) => {
@@ -24,7 +24,6 @@ const Header = () => {
     setMobileMenuOpen(false);
   };
 
-  // Scroll detection
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 30);
     window.addEventListener("scroll", handleScroll);
@@ -42,52 +41,56 @@ const Header = () => {
         }`}
       >
         <div className="max-w-7xl mx-auto px-4">
-          <div className="flex items-center justify-between h-16 lg:h-20">
+          <div className="flex items-center justify-between h-20 lg:h-24">
 
             {/* Contact - Desktop */}
             <div className="hidden md:flex flex-1">
-              <a
-                href="/contact"
-                className={`font-medium transition ${
-                  isScrolled ? "text-gray-700" : "text-white"
+              <Link
+                to="/contact"
+                className={`font-medium transition text-sm ${
+                  isScrolled
+                    ? "text-gray-700 hover:text-gray-900"
+                    : "text-white/90 hover:text-white"
                 }`}
               >
                 {t("header.contact")}
-              </a>
+              </Link>
             </div>
 
             {/* Logo */}
             <div className="absolute left-1/2 -translate-x-1/2">
-            <Link to="/">
-              <img
-                src="/images/logo.png"
-                alt="Logo"
-                className={`h-14 transition ${isScrolled ? "" : "brightness-0 invert"}`}
-              />
-            </Link>
+              <Link to="/">
+                <img
+                  src="/images/logo.png"
+                  alt="Logo"
+                  className="h-16 md:h-20 lg:h-24 w-auto object-contain transition-all duration-300"
+                />
+              </Link>
             </div>
 
             {/* Language - Desktop */}
             <div className="hidden md:flex flex-1 justify-end relative">
               <button
                 onClick={() => setShowLanguageMenu(!showLanguageMenu)}
-                className={`px-3 py-2 border rounded text-sm font-semibold ${
+                className={`px-3 py-2 border rounded text-sm font-semibold transition ${
                   isScrolled
-                    ? "text-gray-700 border-gray-300"
-                    : "text-white border-white/50"
+                    ? "text-gray-700 border-gray-300 hover:border-gray-500"
+                    : "text-white border-white/50 hover:border-white"
                 }`}
               >
                 {language.toUpperCase()}
               </button>
 
               {showLanguageMenu && (
-                <div className="absolute right-0 mt-2 w-32 bg-white rounded shadow z-50">
+                <div className="absolute right-0 top-full mt-2 w-32 bg-white rounded shadow-lg z-50 overflow-hidden">
                   {languages.map((lang) => (
                     <button
                       key={lang.code}
                       onClick={() => handleLanguageChange(lang.code)}
-                      className={`w-full px-3 py-2 text-sm text-left hover:bg-gray-100 ${
-                        language === lang.code && "font-bold"
+                      className={`w-full px-4 py-2.5 text-sm text-left hover:bg-gray-50 transition ${
+                        language === lang.code
+                          ? "font-bold text-gray-900 bg-gray-50"
+                          : "text-gray-600"
                       }`}
                     >
                       {lang.fullName}
@@ -100,37 +103,40 @@ const Header = () => {
             {/* Mobile Menu Button */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className={`md:hidden ${
+              className={`md:hidden text-xl transition ${
                 isScrolled ? "text-gray-700" : "text-white"
               }`}
             >
-              ☰
+              {mobileMenuOpen ? "✕" : "☰"}
             </button>
           </div>
+        </div>
 
-          {/* Mobile Menu */}
-          {mobileMenuOpen && (
-            <div className="md:hidden bg-white border-t py-4">
-              <a
-                href="/contact"
-                className="block px-4 py-2 font-medium"
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                {t("header.contact")}
-              </a>
+        {/* Mobile Menu */}
+        {mobileMenuOpen && (
+          <div className="md:hidden bg-white border-t border-gray-100 py-4 shadow-lg">
+            <Link
+              to="/contact"
+              className="block px-6 py-3 text-sm font-medium text-gray-700 hover:bg-gray-50 transition"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              {t("header.contact")}
+            </Link>
 
-              <div className="px-4 mt-4">
-                <p className="text-xs text-gray-500 mb-2">
-                  {t("header.language")}
-                </p>
+            <div className="px-6 mt-3 pt-3 border-t border-gray-100">
+              <p className="text-xs text-gray-400 uppercase tracking-widest mb-3">
+                {t("header.language")}
+              </p>
+
+              <div className="flex flex-col gap-2">
                 {languages.map((lang) => (
                   <button
                     key={lang.code}
                     onClick={() => handleLanguageChange(lang.code)}
-                    className={`block w-full text-left px-3 py-2 rounded ${
+                    className={`w-full text-left px-4 py-2.5 rounded text-sm transition ${
                       language === lang.code
-                        ? "bg-gray-900 text-white"
-                        : "bg-gray-100"
+                        ? "bg-gray-900 text-white font-semibold"
+                        : "bg-gray-100 text-gray-600 hover:bg-gray-200"
                     }`}
                   >
                     {lang.fullName}
@@ -138,10 +144,11 @@ const Header = () => {
                 ))}
               </div>
             </div>
-          )}
-        </div>
+          </div>
+        )}
       </header>
 
+      {/* Overlay */}
       {(showLanguageMenu || mobileMenuOpen) && (
         <div
           className="fixed inset-0 z-40"

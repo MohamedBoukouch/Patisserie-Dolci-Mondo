@@ -58,11 +58,9 @@
       "mug_rose": "Pink Ladurée Mug"
     },
     "categories": {
-        "wedding": "Wedding",
-        "newBaby": "New Baby",
-        "birthday": "Birthday",
-        "engagement": "Engagement",
-        "anniversary": "Anniversary",
+        "arabic_sweets": "Arabic Sweets",
+        "Box_of_the_gathering": "Box of the Gathering",
+        "chocolate_box": "Chocolate Box",
         "all": "All"
     },
 

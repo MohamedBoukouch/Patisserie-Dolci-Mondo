@@ -59,11 +59,9 @@
     },
   
     "categories": {
-        "wedding": "Mariage",
-        "newBaby": "Nouveau-né",
-        "birthday": "Anniversaire",
-        "engagement": "Fiançailles",
-        "anniversary": "Anniversaire",
+        "arabic_sweets": "des pâtisseries arabes",
+        "Box_of_the_gathering": "Boîte de la réunion",
+        "chocolate_box": "Boîte de chocolat",
         "all": "Tous"
     },
 

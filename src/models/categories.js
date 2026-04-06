@@ -11,27 +11,17 @@ export const categories = [
   },
   {
     id: 1,
-    key: 'categories.newBaby',
+    key: 'categories.arabic_sweets',
     img: slide2,
   },
   {
     id: 2,
-    key: 'categories.birthday',
+    key: 'categories.Box_of_the_gathering',
     img: slide3 ,
   },
   {
     id: 3,
-    key: 'categories.wedding',
-    img: slide1,
-  },
-  {
-    id: 4,
-    key: 'categories.birthday',
-    img: slide3 ,
-  },
-  {
-    id: 5,
-    key: 'categories.engagement',
+    key: 'categories.chocolate_box',
     img: slide1,
   },
 ];
