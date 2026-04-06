@@ -20,7 +20,7 @@ import {
   Tag,
   Layers
 } from 'lucide-react';
-import { fetchOrders, updateOrderStatus, deleteOrder, ORDER_STATUS } from '../../apis/orderApi';
+import { fetchOrders, updateOrderStatus, deleteOrder, ORDER_STATUS } from '../../apis/OrderApi';
 
 const OrdersManagement = () => {
   const [orders, setOrders] = useState([]);
