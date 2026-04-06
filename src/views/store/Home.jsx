@@ -12,7 +12,7 @@ const Home = () => {
   return (
     <main className="pb-12 min-h-screen">
       <Slider />
-      <Section_1 />
+      {/* <Section_1 /> */}
       <Section_2 />
       <Section_3 />
       <Section_4 />
